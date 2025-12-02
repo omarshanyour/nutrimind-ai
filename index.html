@@ -2,12 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>NutriMind AI</title>
+  <title>NutriMind AI — Your Personal AI Health & Fitness Coach</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Embedded CSS so you only need ONE file -->
   <style>
-    /* RESET */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -15,36 +13,25 @@
     }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
       background: radial-gradient(circle at top left, #f9f7f2 0, #f3f2ed 38%, #eceae4 100%);
       color: #111111;
       line-height: 1.5;
     }
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    button {
-      font-family: inherit;
-    }
-
-    /* LAYOUT HELPERS */
     .max-width {
-      max-width: 1120px;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 0 20px;
     }
 
-    /* NAVBAR */
+    /* NAV */
     .nav {
       padding: 18px 0 6px;
       position: sticky;
       top: 0;
-      z-index: 20;
-      backdrop-filter: blur(16px);
+      backdrop-filter: blur(20px);
+      z-index: 50;
       background: linear-gradient(to bottom, rgba(244,243,239,0.94), rgba(244,243,239,0.85), rgba(244,243,239,0));
     }
 
@@ -77,19 +64,20 @@
       text-transform: uppercase;
       letter-spacing: 0.18em;
       font-size: 0.76rem;
-      font-weight: 500;
       opacity: 0.85;
+      font-weight: 500;
     }
 
     .nav-links {
       display: flex;
-      align-items: center;
       gap: 18px;
       font-size: 0.88rem;
       opacity: 0.8;
     }
 
     .nav-links a {
+      text-decoration: none;
+      color: inherit;
       position: relative;
       padding-bottom: 2px;
     }
@@ -97,10 +85,10 @@
     .nav-links a::after {
       content: "";
       position: absolute;
-      left: 0;
       bottom: 0;
-      height: 1px;
+      left: 0;
       width: 0;
+      height: 1px;
       background: #111111;
       transition: width 0.2s ease-out;
     }
@@ -111,416 +99,55 @@
 
     .nav-cta {
       padding: 7px 16px;
-      border-radius: 999px;
-      border: 1px solid rgba(0,0,0,0.12);
-      font-size: 0.85rem;
+      border-radius: 40px;
+      border: 1px solid rgba(0,0,0,0.15);
       background: rgba(255,255,255,0.9);
       cursor: pointer;
+      font-size: 0.85rem;
     }
 
-    .nav-cta:hover {
-      background: #111111;
-      color: #f9f7f2;
-      border-color: #111111;
-    }
-
-    /* HERO */
     .hero {
-      padding: 18px 0 40px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-      gap: 28px;
-      align-items: center;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.9);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-      font-size: 0.75rem;
-      margin-bottom: 12px;
-    }
-
-    .hero-badge-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: #2f7bff;
-    }
-
-    .hero-kicker {
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      font-size: 0.72rem;
-      opacity: 0.75;
-      margin-bottom: 6px;
+      padding: 60px 0 90px;
     }
 
     .hero-title {
-      font-size: 2.6rem;
-      line-height: 1.05;
-      letter-spacing: -0.03em;
-      margin-bottom: 12px;
+      font-size: 2.4rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
     }
 
-    .hero-subtitle {
-      font-size: 0.98rem;
-      max-width: 460px;
-      opacity: 0.82;
-      margin-bottom: 22px;
+    .hero-sub {
+      max-width: 540px;
+      opacity: 0.72;
+      font-size: 1.04rem;
+      margin-bottom: 30px;
     }
 
-    .hero-buttons {
-      display: flex;
+    .hero-cta {
+      display: inline-flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-
-    .btn-primary {
-      padding: 11px 22px;
-      border-radius: 999px;
-      border: none;
+      gap: 10px;
+      padding: 14px 22px;
+      border-radius: 40px;
       background: #111111;
       color: #f9f7f2;
-      font-size: 0.9rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .btn-primary span {
-      font-size: 1.1rem;
-      line-height: 1;
-    }
-
-    .btn-primary:hover {
-      opacity: 0.92;
-    }
-
-    .btn-ghost {
-      padding: 10px 18px;
-      border-radius: 999px;
-      border: 1px solid rgba(0,0,0,0.14);
-      background: transparent;
-      font-size: 0.86rem;
+      font-size: 1rem;
+      border: none;
       cursor: pointer;
     }
 
-    .btn-ghost:hover {
-      background: rgba(255,255,255,0.7);
-    }
-
-    .hero-meta-row {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      font-size: 0.78rem;
-      opacity: 0.8;
-    }
-
-    .hero-meta-pill {
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.8);
-      border: 1px solid rgba(0,0,0,0.05);
-    }
-
-    /* HERO IMAGE SIDE */
-    .hero-card {
-      background: rgba(255,255,255,0.95);
-      border-radius: 24px;
-      padding: 18px;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.08);
-    }
-
-    .hero-main-img {
+    .hero-img {
+      margin-top: 24px;
       width: 100%;
-      height: 240px;
-      border-radius: 18px;
-      object-fit: cover;
-      margin-bottom: 12px;
-    }
-
-    .hero-chip-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      font-size: 0.76rem;
-    }
-
-    .hero-chip {
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: #f5f3ee;
-    }
-
-    .hero-small-label {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      opacity: 0.7;
-      margin-bottom: 4px;
-    }
-
-    .hero-mini-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 10px;
-    }
-
-    .hero-mini-stat {
-      font-size: 0.8rem;
-      opacity: 0.82;
-    }
-
-    .hero-mini-spot {
-      font-size: 0.8rem;
-      opacity: 0.82;
-    }
-
-    /* SECTIONS */
-    .section {
-      padding: 10px 0 40px;
-    }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-
-    .section-title {
-      font-size: 1.3rem;
-      letter-spacing: -0.01em;
-    }
-
-    .section-subtitle {
-      font-size: 0.82rem;
-      opacity: 0.78;
-      max-width: 320px;
-    }
-
-    /* GOAL GRID */
-    .goal-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 14px;
-    }
-
-    .goal-card {
-      background: rgba(255,255,255,0.96);
-      border-radius: 18px;
-      padding: 14px 14px 16px;
-      box-shadow: 0 14px 30px rgba(0,0,0,0.05);
-      border: 1px solid rgba(0,0,0,0.04);
-      cursor: pointer;
-      text-align: left;
-      transition: transform 0.16s ease-out, box-shadow 0.16s ease-out, border-color 0.16s ease-out;
-    }
-
-    .goal-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 18px 46px rgba(0,0,0,0.07);
-      border-color: rgba(0,0,0,0.09);
-    }
-
-    .goal-top-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 6px;
-    }
-
-    .goal-path-label {
-      font-size: 0.75rem;
-      opacity: 0.65;
-    }
-
-    .goal-icon {
-      width: 26px;
-      height: 26px;
-      border-radius: 999px;
-      background: #f3f1ec;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-    }
-
-    .goal-title {
-      font-size: 0.98rem;
-      font-weight: 600;
-      margin-bottom: 2px;
-    }
-
-    .goal-text {
-      font-size: 0.82rem;
-      opacity: 0.8;
-      margin-bottom: 6px;
-    }
-
-    .goal-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 4px 9px;
-      border-radius: 999px;
-      background: #f3f1ec;
-      font-size: 0.7rem;
-      opacity: 0.9;
-    }
-
-    .goal-pill-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: #24a05a;
-    }
-
-    /* HOW IT WORKS */
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 14px;
-    }
-
-    .step-card {
-      background: rgba(255,255,255,0.96);
-      border-radius: 18px;
-      padding: 16px;
-      box-shadow: 0 14px 30px rgba(0,0,0,0.05);
-      border: 1px solid rgba(0,0,0,0.04);
-    }
-
-    .step-number {
-      font-size: 0.76rem;
-      opacity: 0.65;
-      margin-bottom: 6px;
-    }
-
-    .step-title {
-      font-size: 0.98rem;
-      margin-bottom: 4px;
-    }
-
-    .step-text {
-      font-size: 0.83rem;
-      opacity: 0.8;
-    }
-
-    /* PRICING */
-    .pricing-wrap {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 18px;
-      align-items: flex-start;
-    }
-
-    .pricing-card {
-      max-width: 420px;
-      background: rgba(255,255,255,0.98);
       border-radius: 22px;
-      padding: 20px 18px 18px;
-      box-shadow: 0 22px 60px rgba(0,0,0,0.08);
-      border: 1px solid rgba(0,0,0,0.04);
-    }
-
-    .pricing-label {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      opacity: 0.7;
-      margin-bottom: 4px;
-    }
-
-    .pricing-price {
-      font-size: 1.9rem;
-      margin-bottom: 10px;
-      letter-spacing: -0.03em;
-    }
-
-    .pricing-price span {
-      font-size: 0.85rem;
-      opacity: 0.7;
-      margin-left: 4px;
-    }
-
-    .pricing-text {
-      font-size: 0.83rem;
-      opacity: 0.8;
-      margin-bottom: 12px;
-    }
-
-    .pricing-list {
-      list-style: none;
-      margin-bottom: 16px;
-      font-size: 0.83rem;
-      opacity: 0.86;
-    }
-
-    .pricing-list li {
-      margin-bottom: 6px;
-    }
-
-    .pricing-footnote {
-      font-size: 0.76rem;
-      opacity: 0.7;
-      margin-top: 6px;
-    }
-
-    /* FOOTER */
-    .footer {
-      padding: 18px 0 26px;
-      font-size: 0.8rem;
-      opacity: 0.7;
-      text-align: center;
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 860px) {
-      .hero-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-title {
-        font-size: 2.1rem;
-      }
-
-      .nav-links {
-        display: none;
-      }
-
-      .section-header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
-
-    @media (max-width: 500px) {
-      .hero-card {
-        padding: 14px;
-      }
-      .hero-main-img {
-        height: 210px;
-      }
+      filter: brightness(0.92) contrast(1.06);
     }
   </style>
 </head>
+
 <body>
-  <!-- NAVBAR -->
+
+  <!-- NAV -->
   <header class="nav">
     <div class="max-width nav-inner">
       <div class="nav-left">
@@ -528,221 +155,29 @@
         <div class="nav-logo-text">NutriMind AI</div>
       </div>
       <div class="nav-links">
-        <a href="#how">How it works</a>
-        <a href="#paths">Goals</a>
-        <a href="#pricing">Pricing</a>
-        <button class="nav-cta" type="button">Sign in</button>
+        <a href="index.html">Home</a>
+        <button class="nav-cta">Sign In</button>
       </div>
     </div>
   </header>
 
   <!-- HERO -->
-  <main>
-    <section class="hero">
-      <div class="max-width hero-grid">
-        <!-- HERO TEXT SIDE -->
-        <div>
-          <div class="hero-badge">
-            <div class="hero-badge-dot"></div>
-            <span>Personalized health, powered by AI</span>
-          </div>
+  <section class="hero">
+    <div class="max-width">
+      <h1 class="hero-title">Your life, upgraded by AI.</h1>
+      <p class="hero-sub">
+        NutriMind creates personalized nutrition, workout plans, and lifestyle coaching  
+        using your goals, schedule, sleep, energy, and training level.
+      </p>
 
-          <div class="hero-kicker">LIFE-FIRST COACHING</div>
-          <h1 class="hero-title">Food, workouts, and routines that fit your real life.</h1>
-          <p class="hero-subtitle">
-            NutriMind AI builds a realistic, luxurious-feeling plan around your
-            goals — whether you’re a student athlete, a busy parent, or just
-            getting started.
-          </p>
+      <!-- THIS IS THE BUTTON YOU NEEDED FIXED -->
+      <button class="hero-cta" onclick="window.location.href='assessment.html'">
+        <span>●</span> Begin my assessment
+      </button>
 
-          <div class="hero-buttons">
-            <button class="btn-primary" type="button" onclick="alert('The full assessment + AI engine is coming next. 🚀')">
-              <span>●</span> Begin my assessment
-            </button>
-            <button class="btn-ghost" type="button" onclick="alert('This will show a live sample plan soon.')">
-              Preview a sample plan
-            </button>
-          </div>
+      <img class="hero-img" src="https://images.unsplash.com/photo-1599058918144-59f3a5370df2?q=80&w=1200" alt="Healthy lifestyle image" />
+    </div>
+  </section>
 
-          <div class="hero-meta-row">
-            <div class="hero-meta-pill">Designed for teens, parents, and athletes</div>
-            <div class="hero-meta-pill">Nutrition · Training · Habits</div>
-          </div>
-        </div>
-
-        <!-- HERO IMAGE SIDE -->
-        <div>
-          <div class="hero-card">
-            <img
-              class="hero-main-img"
-              src="https://images.unsplash.com/photo-1519750157634-b6d493a0f77c?w=1200&q=80&auto=format&fit=crop"
-              alt="People preparing healthy food and working together"
-            />
-            <div class="hero-chip-row">
-              <div class="hero-chip">🏃‍♂️ Track athlete after practice</div>
-              <div class="hero-chip">👩‍💻 Mom on a lunch break</div>
-              <div class="hero-chip">🎧 Student planning the week</div>
-            </div>
-
-            <div class="hero-mini-row">
-              <div class="hero-mini-stat">
-                <div class="hero-small-label">Plan style</div>
-                Balanced · Flexible · Realistic
-              </div>
-              <div class="hero-mini-spot">
-                <div class="hero-small-label">Works on</div>
-                Phone · Tablet · Laptop
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- GOALS SECTION -->
-    <section class="section" id="paths">
-      <div class="max-width">
-        <div class="section-header">
-          <h2 class="section-title">What are you here for?</h2>
-          <p class="section-subtitle">
-            Choose a path. Your assessment will go deeper from there and your AI
-            coach will shape everything around that choice.
-          </p>
-        </div>
-
-        <div class="goal-grid">
-          <button class="goal-card" type="button">
-            <div class="goal-top-row">
-              <span class="goal-path-label">Path 01</span>
-              <div class="goal-icon">⚖️</div>
-            </div>
-            <div class="goal-title">Lose weight smoothly</div>
-            <p class="goal-text">
-              Steady, sustainable fat loss without extreme tracking or crash diets.
-            </p>
-            <div class="goal-pill">
-              <div class="goal-pill-dot"></div>
-              Most popular
-            </div>
-          </button>
-
-          <button class="goal-card" type="button">
-            <div class="goal-top-row">
-              <span class="goal-path-label">Path 02</span>
-              <div class="goal-icon">💪</div>
-            </div>
-            <div class="goal-title">Build visible muscle</div>
-            <p class="goal-text">
-              Smart strength training and higher-protein meals built around your day.
-            </p>
-          </button>
-
-          <button class="goal-card" type="button">
-            <div class="goal-top-row">
-              <span class="goal-path-label">Path 03</span>
-              <div class="goal-icon">🏅</div>
-            </div>
-            <div class="goal-title">Athlete mode</div>
-            <p class="goal-text">
-              Track, soccer, court sports, and more — fuel and sessions tuned to performance.
-            </p>
-          </button>
-
-          <button class="goal-card" type="button">
-            <div class="goal-top-row">
-              <span class="goal-path-label">Path 04</span>
-              <div class="goal-icon">👩‍👦</div>
-            </div>
-            <div class="goal-title">Busy parent reset</div>
-            <p class="goal-text">
-              Office hours, school runs, quick meals that still move you toward your goals.
-            </p>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- HOW IT WORKS -->
-    <section class="section" id="how">
-      <div class="max-width">
-        <div class="section-header">
-          <h2 class="section-title">How NutriMind AI works</h2>
-          <p class="section-subtitle">
-            No overwhelm, no chaos. Three clear steps, then your plan updates
-            as your life changes.
-          </p>
-        </div>
-
-        <div class="steps-grid">
-          <div class="step-card">
-            <div class="step-number">Step 01</div>
-            <div class="step-title">Tell us about your life</div>
-            <p class="step-text">
-              Goals, schedule, energy, how you like to eat, and the equipment
-              you actually have access to.
-            </p>
-          </div>
-
-          <div class="step-card">
-            <div class="step-number">Step 02</div>
-            <div class="step-title">Your AI coach builds the plan</div>
-            <p class="step-text">
-              A dedicated AI model creates your weekly meals, workouts, hydration,
-              and gentle habit goals.
-            </p>
-          </div>
-
-          <div class="step-card">
-            <div class="step-number">Step 03</div>
-            <div class="step-title">Check in, adjust, repeat</div>
-            <p class="step-text">
-              Each week you reflect for a minute. Your plan adjusts so it always
-              feels realistic and doable.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PRICING -->
-    <section class="section" id="pricing">
-      <div class="max-width">
-        <div class="section-header">
-          <h2 class="section-title">Simple, honest pricing</h2>
-          <p class="section-subtitle">
-            Start free while we’re building. When it’s live, one clear option —
-            no hidden tiers.
-          </p>
-        </div>
-
-        <div class="pricing-wrap">
-          <div class="pricing-card">
-            <div class="pricing-label">Founding access</div>
-            <h3 class="pricing-price">$7.99<span>/month</span></h3>
-            <p class="pricing-text">
-              Lock in early access pricing as a founding NutriMind member.
-            </p>
-            <ul class="pricing-list">
-              <li>Weekly AI nutrition + workout plan</li>
-              <li>Interactive chat with your AI coach</li>
-              <li>Basic calorie, water, and habit tracking</li>
-              <li>Event / race day protocols when you need them</li>
-              <li>Cancel any time, no contracts</li>
-            </ul>
-            <button class="btn-primary" type="button" onclick="alert('Stripe + real payments coming in the next build. 💳')">
-              Unlock my plan
-            </button>
-            <p class="pricing-footnote">
-              You’ll be among the first people to ever use NutriMind AI.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <p>© 2025 NutriMind AI · Concept and design in progress.</p>
-  </footer>
 </body>
 </html>
