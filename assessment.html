@@ -244,7 +244,7 @@
       padding: 20px 18px 18px;
       box-shadow: 0 22px 60px rgba(0,0,0,0.08);
       border: 1px solid rgba(0,0,0,0.04);
-      min-height: 280px;
+      min-height: 260px;
       display: none;
     }
 
@@ -417,11 +417,6 @@
       gap: 6px;
     }
 
-    .btn-next[disabled] {
-      opacity: 0.35;
-      cursor: default;
-    }
-
     .btn-next span {
       font-size: 1rem;
       line-height: 1;
@@ -555,7 +550,7 @@
             <div class="footer-left">About 2–3 minutes to complete.</div>
             <div class="step-buttons">
               <button class="btn-secondary" type="button" disabled>Back</button>
-              <button class="btn-next" type="button" id="next-1" disabled>
+              <button class="btn-next" type="button" data-next="2">
                 Next <span>↗</span>
               </button>
             </div>
@@ -574,15 +569,15 @@
           <div class="input-grid">
             <div class="input-field">
               <label for="age-input">Age</label>
-              <input id="age-input" type="number" min="10" max="90" placeholder="16" />
+              <input id="age-input" type="number" placeholder="16" />
             </div>
             <div class="input-field">
               <label for="height-input">Height</label>
-              <input id="height-input" type="number" min="120" max="230" placeholder="170 (cm)" />
+              <input id="height-input" type="number" placeholder="170 (cm)" />
             </div>
             <div class="input-field">
               <label for="weight-input">Weight</label>
-              <input id="weight-input" type="number" min="30" max="200" placeholder="65 (kg)" />
+              <input id="weight-input" type="number" placeholder="65 (kg)" />
             </div>
           </div>
 
@@ -604,10 +599,10 @@
           </div>
 
           <div class="step-footer">
-            <div class="footer-left">We use this only to personalize your targets.</div>
+            <div class="footer-left">Use what you know now. You can update later.</div>
             <div class="step-buttons">
               <button class="btn-secondary" type="button" data-back="1">Back</button>
-              <button class="btn-next" type="button" id="next-2" disabled>
+              <button class="btn-next" type="button" data-next="3">
                 Next <span>↗</span>
               </button>
             </div>
@@ -661,7 +656,7 @@
             <div class="footer-left">Your coach will adjust intensity to match this.</div>
             <div class="step-buttons">
               <button class="btn-secondary" type="button" data-back="2">Back</button>
-              <button class="btn-next" type="button" id="next-3" disabled>
+              <button class="btn-next" type="button" data-next="4">
                 Next <span>↗</span>
               </button>
             </div>
@@ -704,7 +699,7 @@
             <div class="footer-left">You’ll be able to tweak this inside the app.</div>
             <div class="step-buttons">
               <button class="btn-secondary" type="button" data-back="3">Back</button>
-              <button class="btn-next" type="button" id="next-4" disabled>
+              <button class="btn-next" type="button" data-next="5">
                 Next <span>↗</span>
               </button>
             </div>
@@ -758,7 +753,7 @@
             <div class="footer-left">We’ll keep things realistic to your situation.</div>
             <div class="step-buttons">
               <button class="btn-secondary" type="button" data-back="4">Back</button>
-              <button class="btn-next" type="button" id="next-5" disabled>
+              <button class="btn-next" type="button" id="next-5">
                 Next <span>↗</span>
               </button>
             </div>
@@ -827,95 +822,70 @@
       });
     }
 
-    function setupPillGroup(containerId, key, nextBtnId) {
+    function setupPillGroup(containerId, key, autoAdvanceToStep = null) {
       const container = document.getElementById(containerId);
-      const options = container ? container.querySelectorAll(".pill-option") : [];
-      const nextBtn = nextBtnId ? document.getElementById(nextBtnId) : null;
+      if (!container) return;
+      const options = container.querySelectorAll(".pill-option");
 
       options.forEach(btn => {
         btn.addEventListener("click", () => {
           options.forEach(b => b.classList.remove("selected"));
           btn.classList.add("selected");
           profile[key] = btn.getAttribute("data-value");
-          if (nextBtn) nextBtn.disabled = false;
+          if (autoAdvanceToStep !== null) {
+            showStep(autoAdvanceToStep);
+          }
         });
       });
     }
 
-    // STEP 1
-    setupPillGroup("persona-options", "persona", "next-1");
-    document.getElementById("next-1").addEventListener("click", () => showStep(2));
+    // STEP 1 – persona (auto jump to step 2 when clicked)
+    setupPillGroup("persona-options", "persona", 2);
 
-    // STEP 2
-    setupPillGroup("sex-options", "sex", "next-2");
-
+    // STEP 2 – basic info
+    setupPillGroup("sex-options", "sex", null);
     const ageInput = document.getElementById("age-input");
     const heightInput = document.getElementById("height-input");
     const weightInput = document.getElementById("weight-input");
-    const next2 = document.getElementById("next-2");
 
-    function checkStep2Valid() {
-      const ageVal = Number(ageInput.value);
-      const hVal = Number(heightInput.value);
-      const wVal = Number(weightInput.value);
-      const sexChosen = profile.sex !== null;
-
-      const ok =
-        ageVal >= 10 &&
-        ageVal <= 90 &&
-        hVal >= 120 &&
-        hVal <= 230 &&
-        wVal >= 30 &&
-        wVal <= 200 &&
-        sexChosen;
-
-      if (ok) {
-        profile.age = ageVal;
-        profile.height = hVal;
-        profile.weight = wVal;
-      }
-      next2.disabled = !ok;
+    function updateBasics() {
+      profile.age = ageInput.value ? Number(ageInput.value) : null;
+      profile.height = heightInput.value ? Number(heightInput.value) : null;
+      profile.weight = weightInput.value ? Number(weightInput.value) : null;
     }
-
     [ageInput, heightInput, weightInput].forEach(input => {
-      input.addEventListener("input", checkStep2Valid);
+      input.addEventListener("input", updateBasics);
     });
 
-    next2.addEventListener("click", () => showStep(3));
-
-    // STEP 3
+    // STEP 3 – lifestyle
     setupPillGroup("activity-options", "activity", null);
     setupPillGroup("sleep-options", "sleep", null);
-    const next3 = document.getElementById("next-3");
 
-    function checkStep3Valid() {
-      const ok = profile.activity !== null && profile.sleep !== null;
-      next3.disabled = !ok;
-    }
+    // STEP 4 – goal
+    setupPillGroup("goal-options", "goal", null);
 
-    document.getElementById("activity-options").addEventListener("click", checkStep3Valid);
-    document.getElementById("sleep-options").addEventListener("click", checkStep3Valid);
-
-    next3.addEventListener("click", () => showStep(4));
-
-    // STEP 4
-    setupPillGroup("goal-options", "goal", "next-4");
-    document.getElementById("next-4").addEventListener("click", () => showStep(5));
-
-    // STEP 5
+    // STEP 5 – food + budget
     setupPillGroup("food-style-options", "foodStyle", null);
     setupPillGroup("budget-options", "budget", null);
-    const next5 = document.getElementById("next-5");
 
-    function checkStep5Valid() {
-      const ok = profile.foodStyle !== null && profile.budget !== null;
-      next5.disabled = !ok;
-    }
+    // Generic NEXT buttons
+    document.querySelectorAll("[data-next]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const target = Number(btn.getAttribute("data-next"));
+        showStep(target);
+      });
+    });
 
-    document.getElementById("food-style-options").addEventListener("click", checkStep5Valid);
-    document.getElementById("budget-options").addEventListener("click", checkStep5Valid);
+    // Generic BACK buttons
+    document.querySelectorAll("[data-back]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const target = Number(btn.getAttribute("data-back"));
+        showStep(target);
+      });
+    });
 
-    next5.addEventListener("click", () => {
+    // STEP 5 → build summary and go to 6
+    document.getElementById("next-5").addEventListener("click", () => {
       const summary = document.getElementById("summary-list");
 
       const personaMap = {
@@ -976,18 +946,11 @@
         <li><strong>Food style:</strong> ${foodMap[profile.foodStyle] || "Not set"}</li>
         <li><strong>Budget:</strong> ${budgetMap[profile.budget] || "Not set"}</li>
       `;
+
       showStep(6);
     });
 
-    // BACK buttons
-    document.querySelectorAll("[data-back]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const target = Number(btn.getAttribute("data-back"));
-        showStep(target);
-      });
-    });
-
-    // Finish: save + go to plan.html
+    // FINISH → save + go to plan
     document.getElementById("finish-btn").addEventListener("click", () => {
       try {
         localStorage.setItem("nutrimindProfile", JSON.stringify(profile));
@@ -997,7 +960,7 @@
       window.location.href = "plan.html";
     });
 
-    // Optional: show selected path, if we ever set it from index
+    // Optional: show selected path if we ever set it from index
     (function loadSelectedPath() {
       try {
         const stored = localStorage.getItem("selectedPath");
