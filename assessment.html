@@ -35,7 +35,7 @@
       padding: 0 20px;
     }
 
-    /* NAV – matches index vibe */
+    /* NAV – match index vibe */
     .nav {
       padding: 18px 0 6px;
       position: sticky;
@@ -133,7 +133,7 @@
       align-items: flex-start;
     }
 
-    /* LEFT COLUMN – progress */
+    /* LEFT – progress */
     .progress-panel {
       background: rgba(255,255,255,0.96);
       border-radius: 22px;
@@ -237,7 +237,7 @@
       margin-top: 6px;
     }
 
-    /* RIGHT COLUMN – question card */
+    /* RIGHT – cards */
     .step-card {
       background: rgba(255,255,255,0.98);
       border-radius: 24px;
@@ -254,14 +254,8 @@
     }
 
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(6px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0);   }
     }
 
     .step-label {
@@ -550,7 +544,7 @@
             <div class="footer-left">About 2–3 minutes to complete.</div>
             <div class="step-buttons">
               <button class="btn-secondary" type="button" disabled>Back</button>
-              <button class="btn-next" type="button" data-next="2">
+              <button class="btn-next" type="button" data-next="2" id="next-1">
                 Next <span>↗</span>
               </button>
             </div>
@@ -602,7 +596,7 @@
             <div class="footer-left">Use what you know now. You can update later.</div>
             <div class="step-buttons">
               <button class="btn-secondary" type="button" data-back="1">Back</button>
-              <button class="btn-next" type="button" data-next="3">
+              <button class="btn-next" type="button" data-next="3" id="next-2">
                 Next <span>↗</span>
               </button>
             </div>
@@ -656,7 +650,7 @@
             <div class="footer-left">Your coach will adjust intensity to match this.</div>
             <div class="step-buttons">
               <button class="btn-secondary" type="button" data-back="2">Back</button>
-              <button class="btn-next" type="button" data-next="4">
+              <button class="btn-next" type="button" data-next="4" id="next-3">
                 Next <span>↗</span>
               </button>
             </div>
@@ -699,7 +693,7 @@
             <div class="footer-left">You’ll be able to tweak this inside the app.</div>
             <div class="step-buttons">
               <button class="btn-secondary" type="button" data-back="3">Back</button>
-              <button class="btn-next" type="button" data-next="5">
+              <button class="btn-next" type="button" data-next="5" id="next-4">
                 Next <span>↗</span>
               </button>
             </div>
@@ -770,7 +764,7 @@
           </p>
 
           <ul class="summary-list" id="summary-list">
-            <!-- Filled by JS -->
+            <!-- JS fills this -->
           </ul>
 
           <div class="step-footer">
@@ -791,6 +785,7 @@
   </main>
 
   <script>
+    // simple profile object we’ll pass to plan.html
     const profile = {
       persona: null,
       age: null,
@@ -809,11 +804,13 @@
     function showStep(step) {
       currentStep = step;
 
+      // cards
       document.querySelectorAll(".step-card").forEach(card => {
         const s = Number(card.getAttribute("data-step"));
         card.classList.toggle("active", s === step);
       });
 
+      // left progress
       document.querySelectorAll(".step-item").forEach(item => {
         const label = Number(item.getAttribute("data-step-label"));
         item.classList.remove("active", "completed");
@@ -822,7 +819,7 @@
       });
     }
 
-    function setupPillGroup(containerId, key, autoAdvanceToStep = null) {
+    function setupPillGroup(containerId, key) {
       const container = document.getElementById(containerId);
       if (!container) return;
       const options = container.querySelectorAll(".pill-option");
@@ -832,18 +829,15 @@
           options.forEach(b => b.classList.remove("selected"));
           btn.classList.add("selected");
           profile[key] = btn.getAttribute("data-value");
-          if (autoAdvanceToStep !== null) {
-            showStep(autoAdvanceToStep);
-          }
         });
       });
     }
 
-    // STEP 1 – persona (auto jump to step 2 when clicked)
-    setupPillGroup("persona-options", "persona", 2);
+    // STEP 1
+    setupPillGroup("persona-options", "persona");
 
-    // STEP 2 – basic info
-    setupPillGroup("sex-options", "sex", null);
+    // STEP 2
+    setupPillGroup("sex-options", "sex");
     const ageInput = document.getElementById("age-input");
     const heightInput = document.getElementById("height-input");
     const weightInput = document.getElementById("weight-input");
@@ -857,18 +851,18 @@
       input.addEventListener("input", updateBasics);
     });
 
-    // STEP 3 – lifestyle
-    setupPillGroup("activity-options", "activity", null);
-    setupPillGroup("sleep-options", "sleep", null);
+    // STEP 3
+    setupPillGroup("activity-options", "activity");
+    setupPillGroup("sleep-options", "sleep");
 
-    // STEP 4 – goal
-    setupPillGroup("goal-options", "goal", null);
+    // STEP 4
+    setupPillGroup("goal-options", "goal");
 
-    // STEP 5 – food + budget
-    setupPillGroup("food-style-options", "foodStyle", null);
-    setupPillGroup("budget-options", "budget", null);
+    // STEP 5
+    setupPillGroup("food-style-options", "foodStyle");
+    setupPillGroup("budget-options", "budget");
 
-    // Generic NEXT buttons
+    // NEXT buttons (always work, no disabling)
     document.querySelectorAll("[data-next]").forEach(btn => {
       btn.addEventListener("click", () => {
         const target = Number(btn.getAttribute("data-next"));
@@ -876,7 +870,7 @@
       });
     });
 
-    // Generic BACK buttons
+    // BACK buttons
     document.querySelectorAll("[data-back]").forEach(btn => {
       btn.addEventListener("click", () => {
         const target = Number(btn.getAttribute("data-back"));
@@ -884,7 +878,7 @@
       });
     });
 
-    // STEP 5 → build summary and go to 6
+    // STEP 5 → make summary, move to 6
     document.getElementById("next-5").addEventListener("click", () => {
       const summary = document.getElementById("summary-list");
 
@@ -950,7 +944,7 @@
       showStep(6);
     });
 
-    // FINISH → save + go to plan
+    // FINISH → save + go to plan.html
     document.getElementById("finish-btn").addEventListener("click", () => {
       try {
         localStorage.setItem("nutrimindProfile", JSON.stringify(profile));
@@ -960,7 +954,7 @@
       window.location.href = "plan.html";
     });
 
-    // Optional: show selected path if we ever set it from index
+    // Optional pill from index
     (function loadSelectedPath() {
       try {
         const stored = localStorage.getItem("selectedPath");
