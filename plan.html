@@ -470,7 +470,7 @@
           </ul>
 
           <div class="cta-wrap">
-            <button class="btn-primary" type="button" onclick="alert('This will connect to real AI coaching in the full version.')">
+            <button class="btn-primary" type="button" onclick="window.location.href='ai.html'">
               Talk to my AI coach <span>↗</span>
             </button>
             <p class="small-note">
@@ -487,7 +487,6 @@
   </footer>
 
   <script>
-    // Helper: safely turn value into number or use default
     function numOrDefault(value, fallback) {
       const n = Number(value);
       if (!Number.isFinite(n) || n <= 0) return fallback;
@@ -500,63 +499,44 @@
       const rawPersona = params.get('persona') || '';
       const rawGoal = params.get('goal') || '';
       const age = numOrDefault(params.get('age'), 18);
-      const height = numOrDefault(params.get('height'), 170); // cm
-      const weight = numOrDefault(params.get('weight'), 70);  // kg
+      const height = numOrDefault(params.get('height'), 170);
+      const weight = numOrDefault(params.get('weight'), 70);
       const sex = (params.get('sex') || '').toLowerCase();
 
       return { rawPersona, rawGoal, age, height, weight, sex };
     }
 
     function estimateCaloriesAndMacros({ age, height, weight, sex, rawGoal }) {
-      // Mifflin-St Jeor-ish BMR
       let base;
       if (sex === 'female') {
         base = 10 * weight + 6.25 * height - 5 * age - 161;
       } else {
-        // default treat as male if not clear
         base = 10 * weight + 6.25 * height - 5 * age + 5;
       }
 
-      // Assume moderate activity for now
       let tdee = base * 1.5;
 
-      // Goal-based adjustment
       let adjustment = 0;
       const goal = rawGoal.toLowerCase();
-      if (goal.includes('lose')) {
-        adjustment = -450; // gentle deficit
-      } else if (goal.includes('build')) {
-        adjustment = +300; // small surplus
-      } else if (goal.includes('perform')) {
-        adjustment = +150; // slight bump
-      } else {
-        adjustment = 0;
-      }
+      if (goal.includes('lose')) adjustment = -450;
+      else if (goal.includes('build')) adjustment = +300;
+      else if (goal.includes('perform')) adjustment = +150;
 
       let calories = Math.round(tdee + adjustment);
-      if (calories < 1400) calories = 1400; // minimum guard
+      if (calories < 1400) calories = 1400;
 
-      // Protein: higher for muscle / athletes
       let proteinPerKg = 1.5;
-      if (goal.includes('build') || goal.includes('perform')) {
-        proteinPerKg = 1.7;
-      } else if (goal.includes('lose')) {
-        proteinPerKg = 1.6;
-      } else {
-        proteinPerKg = 1.4;
-      }
+      if (goal.includes('build') || goal.includes('perform')) proteinPerKg = 1.7;
+      else if (goal.includes('lose')) proteinPerKg = 1.6;
+      else proteinPerKg = 1.4;
 
       const proteinGrams = Math.round(proteinPerKg * weight);
-
-      // Fat: ~0.8 g/kg
       const fatGrams = Math.round(0.8 * weight);
 
       const proteinCals = proteinGrams * 4;
       const fatCals = fatGrams * 9;
       let carbCals = calories - proteinCals - fatCals;
-      if (carbCals < calories * 0.25) {
-        carbCals = Math.round(calories * 0.25); // keep some carbs
-      }
+      if (carbCals < calories * 0.25) carbCals = Math.round(calories * 0.25);
 
       const carbGrams = Math.round(carbCals / 4);
 
@@ -570,7 +550,6 @@
       const snapshotDesc = document.getElementById('snapshot-desc');
       const foodStructure = document.getElementById('food-structure');
       const trainingFocus = document.getElementById('training-focus');
-      const exampleDay = document.getElementById('example-day');
       const weekStructure = document.getElementById('week-structure');
 
       const persona = rawPersona || 'Your current lifestyle';
@@ -614,7 +593,6 @@
           'We slowly raise the floor of your habits — more walks, better sleep, and simple meals you’ll actually make.';
       }
 
-      // Adjust example food a tiny bit depending on calories
       if (calories < 1900) {
         foodStructure.innerHTML = `
           <li><strong>Breakfast</strong>: Eggs or Greek yogurt, a slice of toast, and fruit.</li>
@@ -633,7 +611,6 @@
         `;
       }
 
-      // Training focus tweaks
       if (persona.toLowerCase().includes('teen') || persona.toLowerCase().includes('college')) {
         trainingFocus.innerHTML = `
           <li>3–4 main training days built around school and homework.</li>
@@ -654,7 +631,6 @@
       const { calories, proteinGrams, carbGrams, fatGrams } =
         estimateCaloriesAndMacros({ age, height, weight, sex, rawGoal });
 
-      // Fill tags
       document.getElementById('tag-persona').textContent =
         'Persona: ' + (rawPersona || 'Not specified');
       document.getElementById('tag-goal').textContent =
@@ -662,18 +638,15 @@
       document.getElementById('tag-basics').textContent =
         `Basics: ${age}y · ${height}cm · ${weight}kg`;
 
-      // Fill numbers
       document.getElementById('calories-target').innerHTML =
         calories + '<span>kcal / day</span>';
       document.getElementById('protein-grams').textContent = proteinGrams + ' g';
       document.getElementById('carb-grams').textContent = carbGrams + ' g';
       document.getElementById('fat-grams').textContent = fatGrams + ' g';
 
-      // Update note
       document.getElementById('calories-note').textContent =
         'This target is a rough starting point based on your details, not a forever number. We’ll adjust week by week.';
 
-      // Tune copy
       personaliseCopy({ rawPersona, rawGoal }, calories);
     }
 
