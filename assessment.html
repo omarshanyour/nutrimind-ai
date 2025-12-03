@@ -6,11 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
@@ -20,14 +16,8 @@
       line-height: 1.5;
     }
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    button {
-      font-family: inherit;
-    }
+    a { text-decoration: none; color: inherit; }
+    button { font-family: inherit; }
 
     .max-width {
       max-width: 1120px;
@@ -35,7 +25,7 @@
       padding: 0 20px;
     }
 
-    /* NAV – match index vibe */
+    /* NAV */
     .nav {
       padding: 18px 0 6px;
       position: sticky;
@@ -102,9 +92,7 @@
       transition: width 0.2s ease-out;
     }
 
-    .nav-links a:hover::after {
-      width: 100%;
-    }
+    .nav-links a:hover::after { width: 100%; }
 
     .nav-cta {
       padding: 7px 16px;
@@ -122,9 +110,7 @@
     }
 
     /* LAYOUT */
-    .assessment-shell {
-      padding: 18px 0 40px;
-    }
+    .assessment-shell { padding: 18px 0 40px; }
 
     .assessment-grid {
       display: grid;
@@ -164,24 +150,6 @@
       margin-bottom: 14px;
     }
 
-    .selected-path-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: #f5f3ee;
-      font-size: 0.76rem;
-      margin-bottom: 12px;
-    }
-
-    .selected-path-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: #24a05a;
-    }
-
     .step-list {
       list-style: none;
       margin-top: 4px;
@@ -219,9 +187,7 @@
       color: #f9f7f2;
     }
 
-    .step-item.completed {
-      opacity: 0.9;
-    }
+    .step-item.completed { opacity: 0.9; }
 
     .step-item.completed .step-badge {
       border-color: #24a05a;
@@ -298,7 +264,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      transition: border-color 0.16s ease-out, background 0.16s ease-out, transform 0.12s ease-out;
+      transition: border-color 0.16s, background 0.16s, transform 0.12s;
     }
 
     .pill-option span {
@@ -317,9 +283,7 @@
       color: #f9f7f2;
     }
 
-    .pill-option.selected span {
-      opacity: 0.95;
-    }
+    .pill-option.selected span { opacity: 0.95; }
 
     .input-grid {
       display: grid;
@@ -394,9 +358,7 @@
       cursor: pointer;
     }
 
-    .btn-secondary:hover {
-      background: rgba(0,0,0,0.03);
-    }
+    .btn-secondary:hover { background: rgba(0,0,0,0.03); }
 
     .btn-next {
       padding: 9px 18px;
@@ -423,22 +385,12 @@
       margin-bottom: 14px;
     }
 
-    .summary-list li {
-      margin-bottom: 4px;
-    }
+    .summary-list li { margin-bottom: 4px; }
 
     @media (max-width: 860px) {
-      .assessment-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .progress-panel {
-        position: static;
-      }
-
-      .nav-links {
-        display: none;
-      }
+      .assessment-grid { grid-template-columns: 1fr; }
+      .progress-panel { position: static; }
+      .nav-links { display: none; }
     }
   </style>
 </head>
@@ -459,18 +411,13 @@
 
   <main class="assessment-shell">
     <div class="max-width assessment-grid">
-      <!-- LEFT: PROGRESS PANEL -->
+      <!-- LEFT: PROGRESS -->
       <aside class="progress-panel">
         <div class="progress-kicker">Personal setup</div>
         <div class="progress-title">Let’s learn your life first.</div>
         <div class="progress-sub">
           These few questions help your AI coach design a plan that actually
           fits your schedule, energy, and goals.
-        </div>
-
-        <div id="selected-path-pill" class="selected-path-pill" style="display:none;">
-          <div class="selected-path-dot"></div>
-          <span id="selected-path-text"></span>
         </div>
 
         <ul class="step-list">
@@ -506,7 +453,7 @@
         </div>
       </aside>
 
-      <!-- RIGHT: STEP CARDS -->
+      <!-- RIGHT: STEPS -->
       <section>
         <!-- STEP 1 -->
         <div class="step-card active" data-step="1">
@@ -514,7 +461,6 @@
           <h2 class="step-title-main">Who are you here as?</h2>
           <p class="step-subtitle">
             Pick the option that feels closest to your current season of life.
-            We’ll fine-tune details in the next steps.
           </p>
 
           <div class="option-grid" id="persona-options">
@@ -544,7 +490,7 @@
             <div class="footer-left">About 2–3 minutes to complete.</div>
             <div class="step-buttons">
               <button class="btn-secondary" type="button" disabled>Back</button>
-              <button class="btn-next" type="button" data-next="2" id="next-1">
+              <button class="btn-next" type="button" data-next="2">
                 Next <span>↗</span>
               </button>
             </div>
@@ -596,7 +542,7 @@
             <div class="footer-left">Use what you know now. You can update later.</div>
             <div class="step-buttons">
               <button class="btn-secondary" type="button" data-back="1">Back</button>
-              <button class="btn-next" type="button" data-next="3" id="next-2">
+              <button class="btn-next" type="button" data-next="3">
                 Next <span>↗</span>
               </button>
             </div>
@@ -650,7 +596,7 @@
             <div class="footer-left">Your coach will adjust intensity to match this.</div>
             <div class="step-buttons">
               <button class="btn-secondary" type="button" data-back="2">Back</button>
-              <button class="btn-next" type="button" data-next="4" id="next-3">
+              <button class="btn-next" type="button" data-next="4">
                 Next <span>↗</span>
               </button>
             </div>
@@ -693,7 +639,7 @@
             <div class="footer-left">You’ll be able to tweak this inside the app.</div>
             <div class="step-buttons">
               <button class="btn-secondary" type="button" data-back="3">Back</button>
-              <button class="btn-next" type="button" data-next="5" id="next-4">
+              <button class="btn-next" type="button" data-next="5">
                 Next <span>↗</span>
               </button>
             </div>
@@ -747,7 +693,7 @@
             <div class="footer-left">We’ll keep things realistic to your situation.</div>
             <div class="step-buttons">
               <button class="btn-secondary" type="button" data-back="4">Back</button>
-              <button class="btn-next" type="button" id="next-5">
+              <button class="btn-next" type="button" data-next="6">
                 Next <span>↗</span>
               </button>
             </div>
@@ -757,10 +703,10 @@
         <!-- STEP 6 -->
         <div class="step-card" data-step="6">
           <div class="step-label">Step 06</div>
-          <h2 class="step-title-main">Looks good so far?</h2>
+          <h2 class="step-title-main">Quick review, then we build.</h2>
           <p class="step-subtitle">
-            Here’s a quick snapshot of what your AI coach has learned. When you
-            continue, we’ll generate your first draft plan.
+            Here’s a snapshot of what your AI coach knows so far. You can always
+            re-take this later.
           </p>
 
           <ul class="summary-list" id="summary-list">
@@ -779,13 +725,12 @@
             </div>
           </div>
         </div>
-
       </section>
     </div>
   </main>
 
   <script>
-    // simple profile object we’ll pass to plan.html
+    // super simple state object
     const profile = {
       persona: null,
       age: null,
@@ -796,7 +741,7 @@
       sleep: null,
       goal: null,
       foodStyle: null,
-      budget: null
+      budget: null,
     };
 
     let currentStep = 1;
@@ -804,13 +749,11 @@
     function showStep(step) {
       currentStep = step;
 
-      // cards
       document.querySelectorAll(".step-card").forEach(card => {
         const s = Number(card.getAttribute("data-step"));
         card.classList.toggle("active", s === step);
       });
 
-      // left progress
       document.querySelectorAll(".step-item").forEach(item => {
         const label = Number(item.getAttribute("data-step-label"));
         item.classList.remove("active", "completed");
@@ -833,44 +776,42 @@
       });
     }
 
-    // STEP 1
+    // Attach option groups
     setupPillGroup("persona-options", "persona");
-
-    // STEP 2
     setupPillGroup("sex-options", "sex");
+    setupPillGroup("activity-options", "activity");
+    setupPillGroup("sleep-options", "sleep");
+    setupPillGroup("goal-options", "goal");
+    setupPillGroup("food-style-options", "foodStyle");
+    setupPillGroup("budget-options", "budget");
+
+    // Basic inputs
     const ageInput = document.getElementById("age-input");
     const heightInput = document.getElementById("height-input");
     const weightInput = document.getElementById("weight-input");
 
     function updateBasics() {
-      profile.age = ageInput.value ? Number(ageInput.value) : null;
-      profile.height = heightInput.value ? Number(heightInput.value) : null;
-      profile.weight = weightInput.value ? Number(weightInput.value) : null;
+      profile.age = ageInput.value || null;
+      profile.height = heightInput.value || null;
+      profile.weight = weightInput.value || null;
     }
+
     [ageInput, heightInput, weightInput].forEach(input => {
       input.addEventListener("input", updateBasics);
     });
 
-    // STEP 3
-    setupPillGroup("activity-options", "activity");
-    setupPillGroup("sleep-options", "sleep");
-
-    // STEP 4
-    setupPillGroup("goal-options", "goal");
-
-    // STEP 5
-    setupPillGroup("food-style-options", "foodStyle");
-    setupPillGroup("budget-options", "budget");
-
-    // NEXT buttons (always work, no disabling)
+    // Next / Back buttons – always work
     document.querySelectorAll("[data-next]").forEach(btn => {
       btn.addEventListener("click", () => {
         const target = Number(btn.getAttribute("data-next"));
         showStep(target);
+
+        if (target === 6) {
+          buildSummary();
+        }
       });
     });
 
-    // BACK buttons
     document.querySelectorAll("[data-back]").forEach(btn => {
       btn.addEventListener("click", () => {
         const target = Number(btn.getAttribute("data-back"));
@@ -878,73 +819,67 @@
       });
     });
 
-    // STEP 5 → make summary, move to 6
-    document.getElementById("next-5").addEventListener("click", () => {
-      const summary = document.getElementById("summary-list");
+    function mapLabel(map, value, fallback) {
+      return map[value] || fallback;
+    }
 
+    function buildSummary() {
+      const summary = document.getElementById("summary-list");
       const personaMap = {
         teen_athlete: "Teen / student athlete",
         busy_parent: "Busy parent",
         working_pro: "Working professional",
         college_student: "College / uni student",
-        other: "Custom journey"
+        other: "Custom journey",
       };
-
       const sexMap = {
         male: "Male",
         female: "Female",
-        other: "Prefer not to say / other"
+        other: "Prefer not to say / other",
       };
-
       const activityMap = {
         sedentary: "Mostly sitting",
         light: "Lightly active",
-        active: "Active",
-        very_active: "Very active"
+        active: "Active 3–4x / week",
+        very_active: "Very active most days",
       };
-
       const sleepMap = {
         under6: "Under 6 hours",
         6to8: "Around 6–8 hours",
-        over8: "8+ hours"
+        over8: "8+ hours",
       };
-
       const goalMap = {
         weight_loss: "Lose body fat",
         muscle_gain: "Build muscle",
         recomp: "Get toned / recomposition",
         performance: "Performance for sport",
-        health: "General health & consistency"
+        health: "General health & consistency",
       };
-
       const foodMap = {
         simple: "Simple meals",
         cultural: "Cultural / family foods",
         high_protein: "High-protein focus",
-        plant: "Mostly plant-based"
+        plant: "Mostly plant-based",
       };
-
       const budgetMap = {
         tight: "Tight budget",
         moderate: "Moderate budget",
-        flexible: "Flexible budget"
+        flexible: "Flexible budget",
       };
 
       summary.innerHTML = `
-        <li><strong>Persona:</strong> ${personaMap[profile.persona] || "Not set"}</li>
+        <li><strong>Persona:</strong> ${mapLabel(personaMap, profile.persona, "Not set")}</li>
         <li><strong>Basics:</strong> ${profile.age || "?"} yrs · ${profile.height || "?"} cm · ${profile.weight || "?"} kg</li>
-        <li><strong>Sex:</strong> ${sexMap[profile.sex] || "Not set"}</li>
-        <li><strong>Activity level:</strong> ${activityMap[profile.activity] || "Not set"}</li>
-        <li><strong>Sleep:</strong> ${sleepMap[profile.sleep] || "Not set"}</li>
-        <li><strong>Main goal:</strong> ${goalMap[profile.goal] || "Not set"}</li>
-        <li><strong>Food style:</strong> ${foodMap[profile.foodStyle] || "Not set"}</li>
-        <li><strong>Budget:</strong> ${budgetMap[profile.budget] || "Not set"}</li>
+        <li><strong>Sex:</strong> ${mapLabel(sexMap, profile.sex, "Not set")}</li>
+        <li><strong>Activity:</strong> ${mapLabel(activityMap, profile.activity, "Not set")}</li>
+        <li><strong>Sleep:</strong> ${mapLabel(sleepMap, profile.sleep, "Not set")}</li>
+        <li><strong>Goal:</strong> ${mapLabel(goalMap, profile.goal, "Not set")}</li>
+        <li><strong>Food style:</strong> ${mapLabel(foodMap, profile.foodStyle, "Not set")}</li>
+        <li><strong>Budget:</strong> ${mapLabel(budgetMap, profile.budget, "Not set")}</li>
       `;
+    }
 
-      showStep(6);
-    });
-
-    // FINISH → save + go to plan.html
+    // Finish → save + go to plan
     document.getElementById("finish-btn").addEventListener("click", () => {
       try {
         localStorage.setItem("nutrimindProfile", JSON.stringify(profile));
@@ -954,24 +889,8 @@
       window.location.href = "plan.html";
     });
 
-    // Optional pill from index
-    (function loadSelectedPath() {
-      try {
-        const stored = localStorage.getItem("selectedPath");
-        if (!stored) return;
-        const map = {
-          "weight-loss": "Path: Lose weight",
-          "muscle-gain": "Path: Build muscle",
-          "athlete-mode": "Path: Athlete mode",
-          "busy-parent": "Path: Busy parent",
-        };
-        const text = map[stored] || "Custom journey";
-        const pill = document.getElementById("selected-path-pill");
-        const label = document.getElementById("selected-path-text");
-        label.textContent = text;
-        pill.style.display = "inline-flex";
-      } catch(e) {}
-    })();
+    // Init: force step 1
+    showStep(1);
   </script>
 </body>
 </html>
