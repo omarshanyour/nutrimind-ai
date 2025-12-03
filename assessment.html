@@ -126,29 +126,53 @@
       font-size: 0.95rem;
       opacity: 0.82;
       max-width: 520px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
-    .layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.95fr);
-      gap: 22px;
-      align-items: flex-start;
+    /* PROGRESS */
+    .progress {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      font-size: 0.8rem;
+      opacity: 0.8;
     }
 
-    @media (max-width: 860px) {
-      .layout {
-        grid-template-columns: 1fr;
-      }
+    .progress-dots {
+      display: flex;
+      gap: 6px;
+      align-items: center;
     }
 
-    /* LEFT CARD – QUESTIONS */
+    .progress-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      background: rgba(255,255,255,0.9);
+      opacity: 0.5;
+    }
+
+    .progress-dot.active {
+      border-color: #111111;
+      background: #111111;
+      color: #f9f7f2;
+      opacity: 1;
+    }
+
+    /* CARD */
     .card {
       background: rgba(255,255,255,0.98);
       border-radius: 22px;
       padding: 18px 18px 20px;
       box-shadow: 0 20px 60px rgba(0,0,0,0.08);
       border: 1px solid rgba(0,0,0,0.04);
+      margin-bottom: 14px;
     }
 
     .field-label {
@@ -157,27 +181,54 @@
       letter-spacing: 0.16em;
       opacity: 0.7;
       margin-bottom: 6px;
-      margin-top: 10px;
+    }
+
+    .field-title {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .field-help {
+      font-size: 0.83rem;
+      opacity: 0.78;
+      margin-bottom: 14px;
     }
 
     .chip-row {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
+      margin-bottom: 4px;
     }
 
     .chip {
       padding: 7px 11px;
       border-radius: 999px;
       background: #f5f3ee;
-      font-size: 0.82rem;
+      font-size: 0.83rem;
       border: 1px solid rgba(0,0,0,0.06);
+      transition: background 0.12s ease-out, border-color 0.12s ease-out, transform 0.1s ease-out;
     }
 
     .chip span {
       display: block;
-      font-size: 0.76rem;
+      font-size: 0.75rem;
       opacity: 0.7;
+    }
+
+    .chip:hover {
+      transform: translateY(-1px);
+      border-color: rgba(0,0,0,0.18);
+    }
+
+    .chip.chip--selected {
+      background: #111111;
+      color: #f9f7f2;
+      border-color: #111111;
+    }
+
+    .chip.chip--selected span {
+      opacity: 0.8;
     }
 
     .input-grid {
@@ -185,6 +236,7 @@
       grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
       gap: 10px;
       margin-top: 6px;
+      margin-bottom: 8px;
     }
 
     .input-group label {
@@ -208,7 +260,7 @@
     .divider {
       height: 1px;
       background: rgba(0,0,0,0.05);
-      margin: 16px 0 12px;
+      margin: 16px 0 14px;
     }
 
     .helper {
@@ -217,46 +269,40 @@
       max-width: 420px;
     }
 
-    /* RIGHT CARD – SUMMARY + CTA */
-    .side-card-title {
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .side-card-text {
-      font-size: 0.85rem;
-      opacity: 0.8;
-      margin-bottom: 10px;
-    }
-
-    .tag-row {
+    /* NAV BUTTONS */
+    .step-nav {
       display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 10px;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
     }
 
-    .tag {
-      font-size: 0.76rem;
-      padding: 4px 8px;
+    .nav-left-btns {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .btn-secondary,
+    .btn-primary {
       border-radius: 999px;
-      background: #f3f1ec;
-      opacity: 0.9;
+      padding: 8px 16px;
+      font-size: 0.86rem;
+      border: 1px solid rgba(0,0,0,0.12);
+      background: rgba(255,255,255,0.9);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(0,0,0,0.04);
     }
 
     .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 10px 18px;
-      border-radius: 999px;
-      border: none;
+      border-color: #111111;
       background: #111111;
       color: #f9f7f2;
-      font-size: 0.9rem;
-      margin-top: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .btn-primary span {
@@ -264,10 +310,25 @@
       line-height: 1;
     }
 
+    .btn-primary:hover {
+      opacity: 0.93;
+    }
+
     .small-note {
       font-size: 0.8rem;
       opacity: 0.7;
       margin-top: 8px;
+    }
+
+    @media (max-width: 600px) {
+      .headline {
+        font-size: 1.7rem;
+      }
+      .step-nav {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+        gap: 10px;
+      }
     }
   </style>
 </head>
@@ -289,108 +350,215 @@
     <div class="max-width">
       <div class="pill">
         <div class="pill-dot"></div>
-        3-minute intake
+        3-step intake
       </div>
-      <h1 class="headline">Tell us who you are and what you’re chasing.</h1>
+      <h1 class="headline">We’ll build around your real life, not a perfect one.</h1>
       <p class="subtext">
-        This is a calm, honest check-in. No judgment, no perfection — just enough information
-        for NutriMind to build a plan that actually fits your life.
+        Tap what feels closest, not what sounds “ideal”. This version is a preview — soon these
+        answers will feed straight into your personal AI coach.
       </p>
 
-      <div class="layout">
-        <!-- LEFT: QUESTIONS -->
-        <section class="card">
-          <div class="field-label">Who are you here as?</div>
-          <div class="chip-row">
-            <div class="chip">Teen / student athlete<span>School, practice, homework</span></div>
-            <div class="chip">Busy parent<span>Kids, work, tight schedule</span></div>
-            <div class="chip">Working professional<span>Office, commute, meetings</span></div>
-            <div class="chip">College student<span>Classes, late nights, budget</span></div>
-          </div>
-
-          <div class="field-label">Your main goal</div>
-          <div class="chip-row">
-            <div class="chip">Lose weight smoothly</div>
-            <div class="chip">Build visible muscle</div>
-            <div class="chip">Perform better in sports</div>
-            <div class="chip">Just feel healthier</div>
-          </div>
-
-          <div class="field-label">Basics</div>
-          <div class="input-grid">
-            <div class="input-group">
-              <label for="age">Age</label>
-              <input id="age" type="number" placeholder="16" />
-            </div>
-            <div class="input-group">
-              <label for="height">Height (cm)</label>
-              <input id="height" type="number" placeholder="170" />
-            </div>
-            <div class="input-group">
-              <label for="weight">Weight (kg)</label>
-              <input id="weight" type="number" placeholder="65" />
-            </div>
-            <div class="input-group">
-              <label for="sex">Sex</label>
-              <select id="sex">
-                <option value="">Select</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other / prefer not to say</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="field-label">Your week looks like</div>
-          <div class="chip-row">
-            <div class="chip">Mostly sitting<span>Desk, classes, driving</span></div>
-            <div class="chip">On your feet<span>Retail, food service, active job</span></div>
-            <div class="chip">Training 3–4× / week</div>
-            <div class="chip">Heavy training / long shifts</div>
-          </div>
-
-          <div class="field-label">Food style</div>
-          <div class="chip-row">
-            <div class="chip">Simple & quick</div>
-            <div class="chip">Family / cultural meals</div>
-            <div class="chip">High-protein focus</div>
-            <div class="chip">Mostly plant-based</div>
-          </div>
-
-          <div class="divider"></div>
-          <p class="helper">
-            This first version doesn’t save real data yet — it’s a visual preview of how 
-            your intake will look. Next we’ll connect this to an AI coach and your answers.
-          </p>
-        </section>
-
-        <!-- RIGHT: SUMMARY + CTA -->
-        <aside class="card">
-          <div class="side-card-title">What you’ll get from this assessment</div>
-          <p class="side-card-text">
-            Based on your answers, NutriMind will build a calm, realistic starting blueprint
-            for your eating and training — something you could actually follow on a normal week.
-          </p>
-
-          <div class="tag-row">
-            <div class="tag">Daily structure that fits school / work</div>
-            <div class="tag">Example meals that don’t feel “diet”</div>
-            <div class="tag">Training outline around your schedule</div>
-            <div class="tag">Recovery + sleep priorities</div>
-          </div>
-
-          <!-- For now this just goes to plan.html, no JS needed -->
-          <a class="btn-primary" href="plan.html">
-            Generate my starter plan <span>↗</span>
-          </a>
-
-          <p class="small-note">
-            In the full version, this button will send your answers to an AI coach trained only
-            on real sports nutrition and behavior science — no random TikTok junk.
-          </p>
-        </aside>
+      <div class="progress">
+        <div class="progress-dots">
+          <div class="progress-dot active" data-step="1">1</div>
+          <div class="progress-dot" data-step="2">2</div>
+          <div class="progress-dot" data-step="3">3</div>
+        </div>
+        <span id="progress-label">Step 1 of 3 · Who you are</span>
       </div>
+
+      <!-- STEP 1 -->
+      <section class="card" id="step-1">
+        <div class="field-label">Step 1</div>
+        <div class="field-title">Who are you here as?</div>
+        <p class="field-help">
+          We’ll shape your plan to match your schedule, stress, and energy. Pick the one that’s closest.
+        </p>
+
+        <div class="chip-row">
+          <div class="chip" data-group="persona">Teen / student athlete<span>School, practice, homework</span></div>
+          <div class="chip" data-group="persona">Busy parent<span>Kids, work, tight schedule</span></div>
+          <div class="chip" data-group="persona">Working professional<span>Office, commute, meetings</span></div>
+          <div class="chip" data-group="persona">College student<span>Classes, late nights, budget</span></div>
+        </div>
+
+        <div class="divider"></div>
+        <p class="helper">
+          You can always change this later. For now, we just want your coach to talk to you like a real person, not a robot.
+        </p>
+
+        <div class="step-nav">
+          <div class="nav-left-btns">
+            <!-- no back on first step -->
+          </div>
+          <button class="btn-primary" type="button" onclick="nextStep()">
+            Next <span>↗</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section class="card" id="step-2" style="display:none;">
+        <div class="field-label">Step 2</div>
+        <div class="field-title">What do you want most from NutriMind?</div>
+        <p class="field-help">
+          One main goal is enough. Your coach will still support all the other things happening in your life.
+        </p>
+
+        <div class="chip-row">
+          <div class="chip" data-group="goal">Lose weight smoothly<span>No crash diets, no all-or-nothing</span></div>
+          <div class="chip" data-group="goal">Build visible muscle<span>Eat and train for strength and size</span></div>
+          <div class="chip" data-group="goal">Perform better in sports<span>Track, soccer, court sports, more</span></div>
+          <div class="chip" data-group="goal">Just feel healthier<span>Energy, digestion, mood, sleep</span></div>
+        </div>
+
+        <div class="divider"></div>
+        <p class="helper">
+          Soon, this step will also control how aggressive your calorie target is, how your workouts are structured, and how 
+          strict your plan feels.
+        </p>
+
+        <div class="step-nav">
+          <div class="nav-left-btns">
+            <button class="btn-secondary" type="button" onclick="prevStep()">← Back</button>
+          </div>
+          <button class="btn-primary" type="button" onclick="nextStep()">
+            Next <span>↗</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section class="card" id="step-3" style="display:none;">
+        <div class="field-label">Step 3</div>
+        <div class="field-title">Basics so your plan isn't random.</div>
+        <p class="field-help">
+          Just rough numbers are fine. They help your coach avoid giving you way too much or way too little food.
+        </p>
+
+        <div class="input-grid">
+          <div class="input-group">
+            <label for="age">Age</label>
+            <input id="age" type="number" placeholder="16" />
+          </div>
+          <div class="input-group">
+            <label for="height">Height (cm)</label>
+            <input id="height" type="number" placeholder="170" />
+          </div>
+          <div class="input-group">
+            <label for="weight">Weight (kg)</label>
+            <input id="weight" type="number" placeholder="65" />
+          </div>
+          <div class="input-group">
+            <label for="sex">Sex</label>
+            <select id="sex">
+              <option value="">Select</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other / prefer not to say</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <p class="helper">
+          In the full build, NutriMind will use these numbers plus your persona and goal to set calories, protein, carbs, 
+          and training volume — and keep adjusting as you check in each week.
+        </p>
+
+        <div class="step-nav">
+          <div class="nav-left-btns">
+            <button class="btn-secondary" type="button" onclick="prevStep()">← Back</button>
+          </div>
+          <button class="btn-primary" type="button" onclick="finishAssessment()">
+            Finish & see my starter plan <span>↗</span>
+          </button>
+        </div>
+
+        <p class="small-note">
+          For now, this will take you to a static starter plan page. Later, it’ll be powered by real AI using everything 
+          you just told us.
+        </p>
+      </section>
     </div>
   </main>
+
+  <script>
+    let currentStep = 1;
+    const totalSteps = 3;
+
+    function updateProgressLabel() {
+      const label = document.getElementById('progress-label');
+      if (!label) return;
+
+      if (currentStep === 1) {
+        label.textContent = 'Step 1 of 3 · Who you are';
+      } else if (currentStep === 2) {
+        label.textContent = 'Step 2 of 3 · Main goal';
+      } else if (currentStep === 3) {
+        label.textContent = 'Step 3 of 3 · Basic details';
+      }
+    }
+
+    function showStep(step) {
+      currentStep = step;
+
+      // show/hide step cards
+      for (let i = 1; i <= totalSteps; i++) {
+        const card = document.getElementById('step-' + i);
+        if (card) {
+          card.style.display = (i === step) ? 'block' : 'none';
+        }
+      }
+
+      // update progress dots
+      const dots = document.querySelectorAll('.progress-dot');
+      dots.forEach(dot => {
+        const stepNum = Number(dot.getAttribute('data-step'));
+        if (stepNum === step) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+
+      updateProgressLabel();
+    }
+
+    function nextStep() {
+      if (currentStep < totalSteps) {
+        showStep(currentStep + 1);
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 1) {
+        showStep(currentStep - 1);
+      }
+    }
+
+    function finishAssessment() {
+      // Later we’ll send data to AI here.
+      window.location.href = 'plan.html';
+    }
+
+    // Chip selection logic: one selected per group
+    document.addEventListener('click', function (e) {
+      const chip = e.target.closest('.chip');
+      if (!chip) return;
+
+      const group = chip.getAttribute('data-group');
+      if (!group) return;
+
+      const allInGroup = document.querySelectorAll('.chip[data-group="' + group + '"]');
+      allInGroup.forEach(c => c.classList.remove('chip--selected'));
+
+      chip.classList.add('chip--selected');
+    });
+
+    // Initialize first step
+    showStep(1);
+  </script>
 </body>
 </html>
