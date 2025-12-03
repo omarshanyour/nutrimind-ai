@@ -6,299 +6,564 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-      sans-serif;
-      background: radial-gradient(circle at top right, #f9f7f2 0, #f3f2ed 40%, #eceae4 100%);
-      color: #111;
+        sans-serif;
+      background: radial-gradient(circle at top left, #f9f7f2 0, #f3f2ed 38%, #eceae4 100%);
+      color: #111111;
       line-height: 1.5;
     }
 
-    a { text-decoration: none; color: inherit; }
-
-    .shell {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 32px 20px 56px;
+    a {
+      text-decoration: none;
+      color: inherit;
     }
 
+    .max-width {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* NAV */
     .nav {
+      padding: 18px 0 10px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: linear-gradient(to bottom, rgba(244,243,239,0.96), rgba(244,243,239,0.88), rgba(244,243,239,0));
+    }
+
+    .nav-inner {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 28px;
+      justify-content: space-between;
     }
 
     .nav-left {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .nav-logo-mark {
       width: 26px;
       height: 26px;
       border-radius: 9px;
-      background: linear-gradient(135deg, #111, #222);
-      color: #f9f7f2;
+      background: linear-gradient(135deg, #111111, #222222);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: .8rem;
+      color: #f9f7f2;
+      font-size: 0.78rem;
       font-weight: 600;
     }
 
     .nav-logo-text {
       text-transform: uppercase;
       letter-spacing: 0.18em;
-      font-size: 0.78rem;
-      opacity: 0.8;
+      font-size: 0.76rem;
+      font-weight: 500;
+      opacity: 0.85;
     }
 
     .nav-right {
       font-size: 0.85rem;
-      opacity: 0.75;
+      opacity: 0.8;
     }
 
-    .layout {
-      display: grid;
-      grid-template-columns: minmax(0,1.2fr) minmax(0,0.9fr);
-      gap: 22px;
+    .nav-right a {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
     }
 
-    @media (max-width: 780px) {
-      .layout { grid-template-columns: 1fr; }
-    }
-
-    .card {
-      background: #fff;
-      border-radius: 24px;
-      padding: 22px 20px 20px;
-      box-shadow: 0 18px 50px rgba(0,0,0,0.08);
-      border: 1px solid rgba(0,0,0,0.04);
-      margin-bottom: 14px;
+    /* PAGE */
+    .page-wrap {
+      padding: 24px 0 40px;
     }
 
     .pill {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
       padding: 4px 10px;
       border-radius: 999px;
-      background: #f3f1eb;
+      background: rgba(255,255,255,0.9);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
       margin-bottom: 10px;
     }
 
     .pill-dot {
-      width: 6px;
-      height: 6px;
+      width: 7px;
+      height: 7px;
       border-radius: 999px;
-      background: #24a05a;
+      background: #2f7bff;
     }
 
-    h1 {
-      font-size: 1.6rem;
+    .headline {
+      font-size: 2rem;
       letter-spacing: -0.02em;
       margin-bottom: 6px;
     }
 
-    h2 {
-      font-size: 1.05rem;
+    .subtext {
+      font-size: 0.95rem;
+      opacity: 0.82;
+      max-width: 520px;
+      margin-bottom: 18px;
+    }
+
+    .summary {
+      font-size: 0.9rem;
+      opacity: 0.84;
+      margin-bottom: 20px;
+    }
+
+    .summary strong {
+      font-weight: 600;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 22px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 860px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: rgba(255,255,255,0.98);
+      border-radius: 22px;
+      padding: 18px 18px 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
       margin-bottom: 6px;
     }
 
-    .subtitle {
-      font-size: 0.9rem;
+    .card-sub {
+      font-size: 0.85rem;
       opacity: 0.8;
       margin-bottom: 14px;
-      max-width: 520px;
     }
 
-    ul {
-      padding-left: 18px;
-      font-size: 0.9rem;
+    .targets-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      margin-bottom: 10px;
     }
 
-    li { margin-bottom: 6px; }
+    .target-box {
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: #f5f3ee;
+      font-size: 0.85rem;
+    }
 
-    .tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 6px;
+    .target-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      opacity: 0.7;
       margin-bottom: 4px;
     }
 
-    .tag {
-      font-size: 0.76rem;
-      padding: 4px 9px;
-      border-radius: 999px;
-      background: #f3f1eb;
-      opacity: 0.8;
+    .target-value {
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
     }
 
-    .macro-row {
-      display: flex;
+    .target-note {
+      font-size: 0.75rem;
+      opacity: 0.7;
+      margin-top: 3px;
+    }
+
+    .divider {
+      height: 1px;
+      background: rgba(0,0,0,0.05);
+      margin: 14px 0;
+    }
+
+    .meal-list {
+      display: grid;
+      grid-template-columns: 1fr;
       gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 10px;
+    }
+
+    .meal {
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: #f5f3ee;
+      font-size: 0.86rem;
+    }
+
+    .meal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+
+    .meal-name {
+      font-weight: 600;
       font-size: 0.9rem;
     }
 
-    .macro-pill {
-      padding: 8px 10px;
-      border-radius: 999px;
-      background: #faf8f3;
-      border: 1px solid rgba(0,0,0,0.08);
+    .meal-macros {
+      font-size: 0.78rem;
+      opacity: 0.75;
     }
 
-    .cta-row {
-      margin-top: 14px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
+    .meal-body {
+      font-size: 0.86rem;
     }
 
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 10px 16px;
-      border-radius: 999px;
-      background: #111;
-      color: #f9f7f2;
-      font-size: 0.9rem;
-      border: none;
-      cursor: pointer;
-      gap: 6px;
-    }
-
-    .btn-secondary {
-      font-size: 0.85rem;
-      opacity: 0.8;
-    }
-
-    .small {
+    .aside-note {
       font-size: 0.8rem;
       opacity: 0.75;
-      margin-top: 6px;
+      margin-top: 10px;
+    }
+
+    .callout {
+      margin-top: 16px;
+      padding: 14px 14px 12px;
+      border-radius: 18px;
+      background: rgba(17,17,17,0.96);
+      color: #f9f7f2;
+      font-size: 0.86rem;
+    }
+
+    .callout-title {
+      font-size: 0.96rem;
+      margin-bottom: 4px;
+    }
+
+    .callout-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .callout-pill {
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(249,247,242,0.12);
+      font-size: 0.78rem;
+    }
+
+    .cta-btn {
+      margin-top: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(249,247,242,0.4);
+      background: transparent;
+      color: #f9f7f2;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .cta-btn span {
+      font-size: 1.05rem;
+      line-height: 1;
     }
   </style>
 </head>
 <body>
-  <div class="shell">
-    <header class="nav">
+  <!-- NAV -->
+  <header class="nav">
+    <div class="max-width nav-inner">
       <div class="nav-left">
         <div class="nav-logo-mark">N</div>
         <div class="nav-logo-text">NutriMind AI</div>
       </div>
       <div class="nav-right">
-        <a href="assessment.html">← Edit answers</a>
-      </div>
-    </header>
-
-    <section class="card">
-      <div class="pill">
-        <div class="pill-dot"></div>
-        Your starter blueprint
-      </div>
-      <h1>Your first NutriMind plan is ready.</h1>
-      <p class="subtitle">
-        This is a simple starting point — a calm, realistic structure you could
-        actually follow on a busy week. The full AI version will adapt this
-        based on your real data, training, and check-ins.
-      </p>
-
-      <div class="tag-row">
-        <div class="tag">3 meals + 2 snacks</div>
-        <div class="tag">High-protein</div>
-        <div class="tag">Budget-friendly swaps</div>
-        <div class="tag">Designed for school / work days</div>
-      </div>
-
-      <div class="macro-row">
-        <div class="macro-pill">Example target: ~2,200–2,400 kcal</div>
-        <div class="macro-pill">Protein: 120–150g</div>
-        <div class="macro-pill">Carbs: 40–50% of calories</div>
-        <div class="macro-pill">Fats: 25–30% of calories</div>
-      </div>
-
-      <div class="cta-row">
-        <button class="btn-primary" type="button">
-          Upgrade this with AI soon
-        </button>
-        <div class="btn-secondary">
-          In the full version, this button will talk to an AI coach trained only
-          on evidence-based sports nutrition — not random internet tips.
-        </div>
-      </div>
-    </section>
-
-    <div class="layout" style="margin-top:18px;">
-      <div>
-        <div class="card">
-          <h2>Example day of eating</h2>
-          <ul>
-            <li><strong>Breakfast:</strong> Greek yogurt bowl with berries, granola, and honey.</li>
-            <li><strong>Snack 1:</strong> Banana + handful of nuts.</li>
-            <li><strong>Lunch:</strong> Rice, chicken or beans, veggies, and a simple sauce.</li>
-            <li><strong>Snack 2 (pre-training):</strong> Toast with peanut butter + fruit.</li>
-            <li><strong>Dinner:</strong> Protein (chicken, beef, tofu, fish) + potatoes or rice + veggies.</li>
-          </ul>
-          <p class="small">
-            In the future, NutriMind will swap each of these for options that match your culture,
-            budget, and what foods you actually like.
-          </p>
-        </div>
-
-        <div class="card">
-          <h2>Simple training structure</h2>
-          <ul>
-            <li>3–4 days of focused training (track / lifting / sport).</li>
-            <li>1–2 lighter days: walking, mobility, recovery work.</li>
-            <li>1 full rest day with emphasis on sleep and hydration.</li>
-          </ul>
-          <p class="small">
-            Your AI coach will later adjust volume and intensity based on
-            how you report soreness, sleep, and schedule each week.
-          </p>
-        </div>
-      </div>
-
-      <div>
-        <div class="card">
-          <h2>Non-negotiables for progress</h2>
-          <ul>
-            <li>Hit protein most days — not perfection, just consistency.</li>
-            <li>Keep 1–2 “easy” go-to meals you can make half asleep.</li>
-            <li>Drink water throughout the day, not all at night.</li>
-            <li>Sleep at least 7 hours when you can — this moves the needle.</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h2>What NutriMind AI will add</h2>
-          <ul>
-            <li>Adjust calories automatically based on check-ins and weight trend.</li>
-            <li>Change carbs around heavy training days versus off days.</li>
-            <li>Suggest grocery lists that match your budget and store.</li>
-            <li>Answer questions like “What should I eat before my 400m race?”</li>
-          </ul>
-          <p class="small">
-            Your next step: keep building the front end like this. When you’re ready,
-            we’ll wire this page up to real AI using OpenAI’s API so it can read your
-            answers and generate a fully custom plan.
-          </p>
-        </div>
+        <a href="assessment.html">← Back to assessment</a>
       </div>
     </div>
+  </header>
 
-  </div>
+  <main class="page-wrap">
+    <div class="max-width">
+      <div class="pill">
+        <div class="pill-dot"></div>
+        Starter blueprint
+      </div>
+      <h1 class="headline">Here’s what a solid week would look like for you.</h1>
+      <p class="subtext">
+        This is a first-pass plan built from your answers. It’s not “perfect bodybuilder mode” — it’s meant
+        to feel doable on a real schedule.
+      </p>
+
+      <p class="summary" id="summary-text">
+        Loading your details…
+      </p>
+
+      <div class="grid">
+        <!-- LEFT: NUMBERS -->
+        <section class="card">
+          <h2 class="card-title">Daily targets</h2>
+          <p class="card-sub">
+            These are rough numbers based on your weight and main goal. Being in the ballpark already puts
+            you ahead of most people.
+          </p>
+
+          <div class="targets-grid">
+            <div class="target-box">
+              <div class="target-label">Calories</div>
+              <div class="target-value"><span id="target-calories">—</span> kcal</div>
+              <div class="target-note" id="target-calorie-note"></div>
+            </div>
+            <div class="target-box">
+              <div class="target-label">Protein</div>
+              <div class="target-value"><span id="target-protein">—</span> g</div>
+              <div class="target-note">Aim to hit this every day.</div>
+            </div>
+            <div class="target-box">
+              <div class="target-label">Carbs</div>
+              <div class="target-value"><span id="target-carbs">—</span> g</div>
+              <div class="target-note" id="target-carb-note"></div>
+            </div>
+            <div class="target-box">
+              <div class="target-label">Fats</div>
+              <div class="target-value"><span id="target-fats">—</span> g</div>
+              <div class="target-note">Healthy fats keep hormones happy.</div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <p class="card-sub">
+            In the full version, these targets will auto-adjust every week based on your check-ins, weight
+            changes, and how workouts are feeling.
+          </p>
+        </section>
+
+        <!-- RIGHT: EXAMPLE DAY + UPGRADE TEASER -->
+        <section class="card">
+          <h2 class="card-title">Example day on this plan</h2>
+          <p class="card-sub">
+            Here’s how those numbers could look as normal meals you’d actually eat. No boiled-chicken misery.
+          </p>
+
+          <div class="meal-list">
+            <div class="meal">
+              <div class="meal-header">
+                <div class="meal-name">Breakfast · 20–25% of your calories</div>
+                <div class="meal-macros" id="meal-breakfast-macros">—</div>
+              </div>
+              <p class="meal-body">
+                Greek yogurt bowl with berries, honey, and granola.  
+                + 1–2 scrambled eggs or egg whites on the side.
+              </p>
+            </div>
+
+            <div class="meal">
+              <div class="meal-header">
+                <div class="meal-name">Lunch · 25–30% of your calories</div>
+                <div class="meal-macros" id="meal-lunch-macros">—</div>
+              </div>
+              <p class="meal-body">
+                Bowl with grilled chicken, rice or potatoes, mixed veggies, and a simple sauce
+                (olive oil, tahini, or yogurt-based).
+              </p>
+            </div>
+
+            <div class="meal">
+              <div class="meal-header">
+                <div class="meal-name">Dinner · 25–30% of your calories</div>
+                <div class="meal-macros" id="meal-dinner-macros">—</div>
+              </div>
+              <p class="meal-body">
+                Lean meat or fish, carbs you like (pasta, rice, pita, tortillas), and a decent portion of
+                vegetables or salad.
+              </p>
+            </div>
+
+            <div class="meal">
+              <div class="meal-header">
+                <div class="meal-name">Snacks · 15–20% of your calories</div>
+                <div class="meal-macros" id="meal-snacks-macros">—</div>
+              </div>
+              <p class="meal-body">
+                Mix of protein snacks (protein shake, cottage cheese, deli meat), fruit, and fun foods you
+                actually enjoy in moderation.
+              </p>
+            </div>
+          </div>
+
+          <p class="aside-note">
+            The full NutriMind coach would turn this into exact portion sizes, grocery lists, and pre-/post-
+            workout tweaks for your sport or schedule.
+          </p>
+
+          <div class="callout">
+            <div class="callout-title">Founding member version (coming soon)</div>
+            <p>
+              Early access will unlock weekly AI-built plans, chat support, and habit tracking for a flat
+              <strong>$7.99/month</strong>.
+            </p>
+            <div class="callout-row">
+              <div class="callout-pill">Personal AI coach</div>
+              <div class="callout-pill">Weekly check-ins</div>
+              <div class="callout-pill">Race / event protocols</div>
+              <div class="callout-pill">Teen + parent-friendly</div>
+            </div>
+            <button class="cta-btn" type="button" onclick="alert('Payments not live yet — this is still a concept build.')">
+              Join the waitlist <span>↗</span>
+            </button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Read data from URL
+    const params = new URLSearchParams(window.location.search);
+
+    const persona = params.get('persona') || 'someone with a busy life';
+    const goal = params.get('goal') || 'Just feel healthier';
+    const age = params.get('age') || '';
+    const height = params.get('height') || '';
+    const weightRaw = params.get('weight') || '';
+    const sex = params.get('sex') || '';
+
+    // Treat weight as pounds (what you naturally use)
+    let weightLb = parseFloat(weightRaw);
+    if (isNaN(weightLb) || weightLb <= 0) {
+      weightLb = 170; // default
+    }
+
+    // Simple logic: choose calorie multiplier based on goal
+    let mult = 14;
+    let goalShort = 'general health';
+    if (goal.toLowerCase().includes('lose')) {
+      mult = 12;
+      goalShort = 'fat loss';
+    } else if (goal.toLowerCase().includes('build')) {
+      mult = 16;
+      goalShort = 'muscle gain';
+    } else if (goal.toLowerCase().includes('perform')) {
+      mult = 15;
+      goalShort = 'sports performance';
+    }
+
+    const calories = Math.round(weightLb * mult / 10) * 10; // round to nearest 10
+
+    // Protein roughly 0.8–1.0 g per lb
+    let proteinPerLb = (goalShort === 'muscle gain' || goalShort === 'sports performance') ? 0.95 : 0.85;
+    let protein = Math.round(weightLb * proteinPerLb / 5) * 5;
+
+    // Fats ~25% of calories
+    let fatCalories = calories * 0.25;
+    let fats = Math.round(fatCalories / 9 / 5) * 5;
+
+    // Carbs = remaining calories
+    let carbCalories = calories - (protein * 4 + fats * 9);
+    let carbs = Math.max(0, Math.round(carbCalories / 4 / 5) * 5);
+
+    // Fill summary text
+    const summaryEl = document.getElementById('summary-text');
+    const agePart = age ? `${age} · ` : '';
+    const sexPart = sex ? `${sex} · ` : '';
+    const heightPart = height ? `${height} cm · ` : '';
+    summaryEl.innerHTML = `
+      You told us you’re <strong>${persona}</strong> with a main goal of
+      <strong>${goal}</strong>. Using your basics (${agePart}${sexPart}${heightPart}${weightLb} lb),
+      here’s a realistic starting point — not a forever plan, just a smart first week.
+    `;
+
+    // Fill daily targets
+    document.getElementById('target-calories').textContent = calories;
+    document.getElementById('target-protein').textContent = protein;
+    document.getElementById('target-carbs').textContent = carbs;
+    document.getElementById('target-fats').textContent = fats;
+
+    const calorieNoteEl = document.getElementById('target-calorie-note');
+    const carbNoteEl = document.getElementById('target-carb-note');
+
+    if (goalShort === 'fat loss') {
+      calorieNoteEl.textContent = 'Gently below maintenance to cut fat without killing your energy.';
+      carbNoteEl.textContent = 'Keep most carbs around training and earlier in the day.';
+    } else if (goalShort === 'muscle gain') {
+      calorieNoteEl.textContent = 'Slight surplus to support muscle growth without getting too soft.';
+      carbNoteEl.textContent = 'Plenty of carbs to drive training and recovery.';
+    } else if (goalShort === 'sports performance') {
+      calorieNoteEl.textContent = 'Enough energy for practices, meets, and recovery.';
+      carbNoteEl.textContent = 'Carbs are your main fuel — especially on hard days.';
+    } else {
+      calorieNoteEl.textContent = 'Around your likely maintenance to support feeling better overall.';
+      carbNoteEl.textContent = 'Balanced carbs across meals to keep energy steady.';
+    }
+
+    // Split macros roughly across the day
+    function splitMacros(total, perc) {
+      return Math.round(total * perc / 5) * 5;
+    }
+
+    const macros = {
+      breakfast: {
+        cals: Math.round(calories * 0.22),
+        p: splitMacros(protein, 0.22),
+        c: splitMacros(carbs, 0.22),
+        f: splitMacros(fats, 0.22)
+      },
+      lunch: {
+        cals: Math.round(calories * 0.28),
+        p: splitMacros(protein, 0.28),
+        c: splitMacros(carbs, 0.28),
+        f: splitMacros(fats, 0.28)
+      },
+      dinner: {
+        cals: Math.round(calories * 0.28),
+        p: splitMacros(protein, 0.28),
+        c: splitMacros(carbs, 0.28),
+        f: splitMacros(fats, 0.28)
+      },
+      snacks: {
+        cals: Math.round(calories * 0.22),
+        p: splitMacros(protein, 0.22),
+        c: splitMacros(carbs, 0.22),
+        f: splitMacros(fats, 0.22)
+      }
+    };
+
+    document.getElementById('meal-breakfast-macros').textContent =
+      `${macros.breakfast.cals} kcal · ${macros.breakfast.p}P / ${macros.breakfast.c}C / ${macros.breakfast.f}F`;
+
+    document.getElementById('meal-lunch-macros').textContent =
+      `${macros.lunch.cals} kcal · ${macros.lunch.p}P / ${macros.lunch.c}C / ${macros.lunch.f}F`;
+
+    document.getElementById('meal-dinner-macros').textContent =
+      `${macros.dinner.cals} kcal · ${macros.dinner.p}P / ${macros.dinner.c}C / ${macros.dinner.f}F`;
+
+    document.getElementById('meal-snacks-macros').textContent =
+      `${macros.snacks.cals} kcal · ${macros.snacks.p}P / ${macros.snacks.c}C / ${macros.snacks.f}F`;
+  </script>
 </body>
 </html>
