@@ -2,48 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>NutriMind AI · Become a Member</title>
+  <title>NutriMind AI · Subscription</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        sans-serif;
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
       background: radial-gradient(circle at top left, #f9f7f2 0, #f3f2ed 38%, #eceae4 100%);
-      color: #111111;
+      color: #111;
       line-height: 1.5;
     }
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    button {
-      font-family: inherit;
-      cursor: pointer;
-    }
-
     .max-width {
-      max-width: 1000px;
-      margin: 0 auto;
+      max-width: 880px;
       padding: 0 20px;
+      margin: 0 auto;
     }
 
-    /* NAV */
-    .nav {
-      padding: 18px 0 10px;
+    header {
+      padding: 20px 0;
+      backdrop-filter: blur(16px);
+      background: rgba(244,243,239,0.85);
       position: sticky;
       top: 0;
       z-index: 20;
-      backdrop-filter: blur(16px);
-      background: linear-gradient(to bottom, rgba(244,243,239,0.96), rgba(244,243,239,0.88), rgba(244,243,239,0));
     }
 
     .nav-inner {
@@ -62,505 +45,159 @@
       width: 26px;
       height: 26px;
       border-radius: 9px;
-      background: linear-gradient(135deg, #111111, #222222);
+      background: linear-gradient(135deg, #111, #222);
       display: flex;
       align-items: center;
       justify-content: center;
       color: #f9f7f2;
-      font-size: 0.78rem;
+      font-size: .78rem;
       font-weight: 600;
     }
 
     .nav-logo-text {
+      font-size: .78rem;
       text-transform: uppercase;
-      letter-spacing: 0.18em;
-      font-size: 0.76rem;
-      font-weight: 500;
+      letter-spacing: 0.16em;
       opacity: 0.85;
     }
 
-    .nav-right {
-      font-size: 0.85rem;
-      opacity: 0.85;
-    }
-
-    .nav-right a {
-      text-decoration: underline;
-      text-decoration-thickness: 1px;
-      text-underline-offset: 3px;
-    }
-
-    /* PAGE LAYOUT */
-    .page-wrap {
-      padding: 26px 0 40px;
-    }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.9);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.06);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      margin-bottom: 10px;
-    }
-
-    .pill-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: #2f7bff;
-    }
-
-    .headline {
-      font-size: 2.1rem;
-      letter-spacing: -0.02em;
-      margin-bottom: 8px;
-    }
-
-    .subtext {
-      font-size: 0.96rem;
-      opacity: 0.82;
-      max-width: 560px;
-      margin-bottom: 18px;
-    }
-
-    .trust-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      font-size: 0.8rem;
-      opacity: 0.78;
-      margin-bottom: 22px;
-    }
-
-    .trust-pill {
-      padding: 5px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.9);
-      border: 1px solid rgba(0,0,0,0.06);
-    }
-
-    /* HYBRID SECTION: light top, dark bottom */
-    .pricing-shell {
-      border-radius: 28px;
-      overflow: hidden;
-      box-shadow: 0 28px 80px rgba(0,0,0,0.12);
-      background: #111111;
-      color: #f9f7f2;
-    }
-
-    .pricing-top {
-      background: linear-gradient(135deg, #f9f7f2, #f1efe7);
-      color: #111111;
-      padding: 20px 20px 18px;
-    }
-
-    .pricing-top-inner {
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      align-items: flex-start;
-    }
-
-    .pricing-top-title {
-      font-size: 1.2rem;
-      letter-spacing: -0.01em;
-      margin-bottom: 4px;
-    }
-
-    .pricing-top-text {
-      font-size: 0.86rem;
-      opacity: 0.8;
-      max-width: 420px;
-    }
-
-    .badge-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      font-size: 0.76rem;
-    }
-
-    .badge {
-      padding: 4px 9px;
-      border-radius: 999px;
-      background: #111111;
-      color: #f9f7f2;
-    }
-
-    .badge.light {
-      background: #f5f3ee;
-      color: #111111;
-      border: 1px solid rgba(0,0,0,0.08);
-    }
-
-    /* DARK PRICING GRID */
-    .pricing-bottom {
-      padding: 20px;
-      background: radial-gradient(circle at top left, #202020, #060606 55%);
-    }
-
-    .plans-grid {
+    .plan-container {
+      margin-top: 40px;
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
+      gap: 20px;
     }
 
     .plan-card {
-      border-radius: 18px;
-      padding: 14px 14px 16px;
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.08);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      background: rgba(255,255,255,0.97);
+      border-radius: 22px;
+      padding: 20px;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.08);
+      border: 1px solid rgba(0,0,0,0.05);
     }
 
-    .plan-label {
-      font-size: 0.76rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      opacity: 0.75;
-      margin-bottom: 6px;
-    }
-
-    .plan-name {
-      font-size: 1rem;
+    .plan-title {
+      font-size: 1.4rem;
       margin-bottom: 4px;
     }
 
-    .plan-price {
-      font-size: 1.5rem;
-      margin-bottom: 2px;
+    .price {
+      font-size: 1.9rem;
+      font-weight: 700;
       letter-spacing: -0.02em;
+      margin-bottom: 10px;
     }
 
-    .plan-price span {
-      font-size: 0.8rem;
-      opacity: 0.8;
-      margin-left: 2px;
-    }
-
-    .plan-note {
-      font-size: 0.8rem;
+    .desc {
       opacity: 0.75;
-      margin-bottom: 10px;
+      margin-bottom: 16px;
+      font-size: 0.9rem;
+      max-width: 600px;
     }
 
-    .plan-features {
-      list-style: none;
-      font-size: 0.8rem;
-      opacity: 0.9;
-      margin-bottom: 10px;
-    }
-
-    .plan-features li {
-      margin-bottom: 4px;
-    }
-
-    .recommended {
-      border-color: rgba(255,255,255,0.36);
-      background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(0,0,0,0.6));
-      position: relative;
-    }
-
-    .recommended-tag {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      font-size: 0.7rem;
-      padding: 3px 8px;
+    button {
       border-radius: 999px;
-      background: #f9f7f2;
-      color: #111111;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-    }
-
-    .plan-button {
-      border-radius: 999px;
-      padding: 8px 14px;
-      font-size: 0.82rem;
-      border: 1px solid rgba(255,255,255,0.45);
-      background: rgba(255,255,255,0.06);
+      border: none;
+      padding: 10px 22px;
+      font-size: 0.9rem;
+      background: #111;
       color: #f9f7f2;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      cursor: pointer;
+      transition: 0.15s ease-out;
     }
 
-    .plan-button span {
-      font-size: 1rem;
+    button:hover {
+      opacity: 0.9;
     }
 
-    .plan-button-primary {
-      background: #f9f7f2;
-      color: #111111;
-      border-color: #f9f7f2;
-    }
-
-    .pay-row {
-      margin-top: 16px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      font-size: 0.8rem;
-      opacity: 0.82;
-    }
-
-    .pay-btn {
-      border-radius: 999px;
-      padding: 7px 14px;
-      border: 1px solid rgba(255,255,255,0.35);
-      background: rgba(255,255,255,0.04);
-      font-size: 0.8rem;
-    }
-
-    .pay-note {
+    footer {
+      margin-top: 40px;
+      font-size: 0.78rem;
       opacity: 0.7;
-    }
-
-    /* FAQ / REASSURANCE */
-    .faq-section {
-      margin-top: 26px;
-      display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-      gap: 18px;
-    }
-
-    .faq-title {
-      font-size: 1.1rem;
-      letter-spacing: -0.01em;
-      margin-bottom: 6px;
-    }
-
-    .faq-text {
-      font-size: 0.88rem;
-      opacity: 0.8;
-      margin-bottom: 12px;
-    }
-
-    .faq-list {
-      list-style: none;
-      font-size: 0.85rem;
-      opacity: 0.86;
-    }
-
-    .faq-list li {
-      margin-bottom: 6px;
-    }
-
-    .guarantee {
-      padding: 14px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.98);
-      box-shadow: 0 18px 54px rgba(0,0,0,0.1);
-      border: 1px solid rgba(0,0,0,0.04);
-      font-size: 0.86rem;
-    }
-
-    .guarantee strong {
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    /* FOOTER */
-    .footer {
-      padding: 18px 0 26px;
-      font-size: 0.8rem;
-      opacity: 0.7;
+      padding-bottom: 20px;
       text-align: center;
     }
-
-    @media (max-width: 900px) {
-      .pricing-top-inner {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .plans-grid {
-        grid-template-columns: 1fr;
-      }
-      .faq-section {
-        grid-template-columns: 1fr;
-      }
-      .headline {
-        font-size: 1.8rem;
-      }
-    }
   </style>
+
+  <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
-  <!-- NAV -->
-  <header class="nav">
-    <div class="max-width nav-inner">
-      <div class="nav-left">
-        <div class="nav-logo-mark">N</div>
-        <div class="nav-logo-text">NutriMind AI</div>
-      </div>
-      <div class="nav-right">
-        <a href="plan.html">← Back to my starter plan</a>
-      </div>
+
+<header>
+  <div class="max-width nav-inner">
+    <div class="nav-left">
+      <div class="nav-logo-mark">N</div>
+      <div class="nav-logo-text">NutriMind AI</div>
     </div>
-  </header>
 
-  <main class="page-wrap">
-    <div class="max-width">
-      <div class="pill">
-        <div class="pill-dot"></div>
-        Founding memberships
-      </div>
-
-      <h1 class="headline">Unlock the full AI coach, not just the preview.</h1>
-      <p class="subtext">
-        Your starter plan is a strong first draft. As a member, NutriMind AI will adjust
-        your food, training, and habits every week based on your real life — not a perfect one.
-      </p>
-
-      <div class="trust-row">
-        <div class="trust-pill">Cancel online any time</div>
-        <div class="trust-pill">No hidden tiers or upsells</div>
-        <div class="trust-pill">Teen, parent, and athlete friendly</div>
-      </div>
-
-      <!-- HYBRID PRICING CARD -->
-      <section class="pricing-shell">
-        <!-- LIGHT TOP -->
-        <div class="pricing-top">
-          <div class="pricing-top-inner">
-            <div>
-              <h2 class="pricing-top-title">Choose a lane and let NutriMind do the thinking.</h2>
-              <p class="pricing-top-text">
-                All plans include the same AI brain. You’re just choosing how deep you want to go:
-                lighter accountability, full performance mode, or coach-level detail.
-              </p>
-            </div>
-            <div class="badge-row">
-              <div class="badge">Weekly AI adjustments</div>
-              <div class="badge light">Race / game day protocols</div>
-              <div class="badge light">Chat-first coaching</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- DARK BOTTOM -->
-        <div class="pricing-bottom">
-          <div class="plans-grid">
-            <!-- Plan 1: Starter -->
-            <article class="plan-card">
-              <div>
-                <div class="plan-label">Light touch</div>
-                <h3 class="plan-name">Starter</h3>
-                <p class="plan-price">$4.99<span>/month</span></p>
-                <p class="plan-note">
-                  For people who just want structure and gentle nudges.
-                </p>
-                <ul class="plan-features">
-                  <li>✔ Weekly refreshed meal + workout template</li>
-                  <li>✔ Simple calorie & protein targets</li>
-                  <li>✔ Habit suggestions that fit your schedule</li>
-                  <li>✖ No chat-based coaching</li>
-                </ul>
-              </div>
-              <button class="plan-button" type="button" onclick="fakeCheckout('Starter')">
-                Get Starter <span>↗</span>
-              </button>
-            </article>
-
-            <!-- Plan 2: Athlete Mode (RECOMMENDED) -->
-            <article class="plan-card recommended">
-              <div class="recommended-tag">Best starting point</div>
-              <div>
-                <div class="plan-label">Dialed in</div>
-                <h3 class="plan-name">Athlete Mode</h3>
-                <p class="plan-price">$7.99<span>/month</span></p>
-                <p class="plan-note">
-                  Perfect for student athletes, busy parents, and anyone who takes performance seriously.
-                </p>
-                <ul class="plan-features">
-                  <li>✔ Full AI coach chat, 24/7</li>
-                  <li>✔ Weekly updated nutrition + training plan</li>
-                  <li>✔ Custom event / race day playbooks</li>
-                  <li>✔ Smart adjustments when life gets chaotic</li>
-                </ul>
-              </div>
-              <button class="plan-button plan-button-primary" type="button" onclick="fakeCheckout('Athlete Mode')">
-                Start Athlete Mode <span>↗</span>
-              </button>
-            </article>
-
-            <!-- Plan 3: Pro Coach -->
-            <article class="plan-card">
-              <div>
-                <div class="plan-label">All in</div>
-                <h3 class="plan-name">Pro Coach</h3>
-                <p class="plan-price">$14.99<span>/month</span></p>
-                <p class="plan-note">
-                  For serious competitors and adults who want as much data and detail as possible.
-                </p>
-                <ul class="plan-features">
-                  <li>✔ Everything in Athlete Mode</li>
-                  <li>✔ Extra detailed macro & timing breakdowns</li>
-                  <li>✔ More frequent check-in prompts</li>
-                  <li>✔ Priority for new features</li>
-                </ul>
-              </div>
-              <button class="plan-button" type="button" onclick="fakeCheckout('Pro Coach')">
-                Join Pro Coach <span>↗</span>
-              </button>
-            </article>
-          </div>
-
-          <div class="pay-row">
-            <button class="pay-btn" type="button" onclick="alert('In the real product, this will open Apple Pay / Google Pay / card checkout.')">
-              Continue with card or Apple / Google Pay
-            </button>
-            <span class="pay-note">
-              You’re not actually charged in this prototype. This is a design preview for your real Stripe integration.
-            </span>
-          </div>
-        </div>
-      </section>
-
-      <!-- FAQ / REASSURANCE -->
-      <section class="faq-section">
-        <div>
-          <h3 class="faq-title">What exactly do I get once I upgrade?</h3>
-          <p class="faq-text">
-            The second you become a member, the AI coach you’ve already met on your starter plan
-            becomes fully interactive. It will remember your goals, your numbers, and your check-ins,
-            and it will keep adjusting your plan as life changes.
-          </p>
-          <ul class="faq-list">
-            <li>• Ask “What should I eat before my race at 4pm?” and get a clear answer.</li>
-            <li>• Tell it “I ate out twice this week” and it will adjust the next few days.</li>
-            <li>• Ask for quick meal ideas that match your calories and macros.</li>
-            <li>• Get realistic tweaks, not “perfect” routines that fall apart in 3 days.</li>
-          </ul>
-        </div>
-
-        <aside class="guarantee">
-          <strong>No contracts. No weird lock-ins.</strong>
-          If NutriMind doesn’t make your week feel easier — not more stressful — you can cancel
-          in under a minute in your account. No emails, no phone calls, no guilt trip.
-        </aside>
-      </section>
+    <div class="nav-right">
+      <a href="plan.html" style="opacity:0.75;text-decoration:underline;">← Back</a>
     </div>
-  </main>
+  </div>
+</header>
 
-  <footer class="footer">
-    <p>© 2025 NutriMind AI · Early prototype. Not medical advice.</p>
-  </footer>
+<main class="max-width">
 
-  <script>
-    function fakeCheckout(planName) {
-      alert('In the real product, this would start checkout for: ' + planName + '.\\n\\nFor now, this is a prototype so you can show the flow.');
-    }
-  </script>
+  <h1 style="font-size:2rem;margin-top:20px;">
+    Unlock your full AI coach experience.
+  </h1>
+  <p style="opacity:0.78;max-width:520px;">
+    Choose a plan. Your subscription instantly unlocks our full AI coach — nutrition, recovery, sleep, and training support that updates daily.
+  </p>
+
+  <section class="plan-container">
+
+    <!-- WEEKLY -->
+    <div class="plan-card">
+      <h2 class="plan-title">Weekly Plan</h2>
+      <div class="price">$7.99<span style="font-size:.9rem;font-weight:400;"> / week</span></div>
+      <p class="desc">Great if you want to test the full AI coach for a shorter period. Cancel anytime.</p>
+      <button onclick="startCheckout('weekly')">Choose Weekly</button>
+    </div>
+
+    <!-- MONTHLY -->
+    <div class="plan-card">
+      <h2 class="plan-title">Monthly Plan</h2>
+      <div class="price">$19.99<span style="font-size:.9rem;font-weight:400;"> / month</span></div>
+      <p class="desc">Perfect for committed athletes and students who want consistent support.</p>
+      <button onclick="startCheckout('monthly')">Choose Monthly</button>
+    </div>
+
+    <!-- YEARLY -->
+    <div class="plan-card">
+      <h2 class="plan-title">Yearly Plan</h2>
+      <div class="price">$69.99<span style="font-size:.9rem;font-weight:400;"> / year</span></div>
+      <p class="desc">Best value. Save massively compared to weekly/monthly plans.</p>
+      <button onclick="startCheckout('yearly')">Choose Yearly</button>
+    </div>
+
+  </section>
+</main>
+
+<footer>
+  © 2025 NutriMind AI · Subscription Page
+</footer>
+
+<script>
+  // ←← INSERT YOUR STRIPE TEST PUBLISHABLE KEY HERE
+  const stripe = Stripe("pk_test_xxxxxxxxxxxxxxxxxxxxx");
+
+  // YOUR REAL PRICE IDs
+  const PRICE_IDS = {
+    weekly:  "price_1SaAznFp5LghhwFKR1qPevG3",
+    monthly: "price_1SaB0eFp5LghhwFKxfR1Pqf0",
+    yearly:  "price_1SaB23Fp5LghhwFKsk66MmeJ"
+  };
+
+  function startCheckout(plan) {
+    const priceId = PRICE_IDS[plan];
+    stripe.redirectToCheckout({
+      lineItems: [{ price: priceId, quantity: 1 }],
+      mode: "subscription",
+      successUrl: window.location.origin + "/ai.html?subscribed=1",
+      cancelUrl: window.location.origin + "/subscribe.html?canceled=1"
+    });
+  }
+</script>
+
 </body>
 </html>
