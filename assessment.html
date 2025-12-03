@@ -539,8 +539,35 @@
     }
 
     function finishAssessment() {
-      // Later we’ll send data to AI here.
-      window.location.href = 'plan.html';
+      // Get selected persona + goal
+      const personaChip = document.querySelector('.chip[data-group="persona"].chip--selected');
+      const goalChip = document.querySelector('.chip[data-group="goal"].chip--selected');
+
+      const persona = personaChip ? personaChip.textContent.trim() : '';
+      const goal = goalChip ? goalChip.textContent.trim() : '';
+
+      // Get basic info
+      const ageInput = document.getElementById('age');
+      const heightInput = document.getElementById('height');
+      const weightInput = document.getElementById('weight');
+      const sexSelect = document.getElementById('sex');
+
+      const age = ageInput ? ageInput.value : '';
+      const height = heightInput ? heightInput.value : '';
+      const weight = weightInput ? weightInput.value : '';
+      const sex = sexSelect ? sexSelect.value : '';
+
+      // Build query string for plan.html
+      const params = new URLSearchParams({
+        persona,
+        goal,
+        age,
+        height,
+        weight,
+        sex
+      });
+
+      window.location.href = 'plan.html?' + params.toString();
     }
 
     // Chip selection logic: one selected per group
