@@ -5,7 +5,6 @@
   <title>NutriMind AI · Assessment</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Embedded CSS for this page -->
   <style>
     * {
       box-sizing: border-box;
@@ -246,7 +245,7 @@
       box-shadow: 0 22px 60px rgba(0,0,0,0.08);
       border: 1px solid rgba(0,0,0,0.04);
       min-height: 280px;
-      display: none; /* only current step is visible */
+      display: none;
     }
 
     .step-card.active {
@@ -286,7 +285,6 @@
       max-width: 420px;
     }
 
-    /* Option pills / inputs */
     .option-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -373,7 +371,6 @@
       margin-bottom: 16px;
     }
 
-    /* NAVIGATION BUTTONS */
     .step-footer {
       display: flex;
       justify-content: space-between;
@@ -471,7 +468,6 @@
     </div>
   </header>
 
-  <!-- ASSESSMENT LAYOUT -->
   <main class="assessment-shell">
     <div class="max-width assessment-grid">
       <!-- LEFT: PROGRESS PANEL -->
@@ -523,7 +519,7 @@
 
       <!-- RIGHT: STEP CARDS -->
       <section>
-        <!-- STEP 1: Persona -->
+        <!-- STEP 1 -->
         <div class="step-card active" data-step="1">
           <div class="step-label">Step 01</div>
           <h2 class="step-title-main">Who are you here as?</h2>
@@ -566,7 +562,7 @@
           </div>
         </div>
 
-        <!-- STEP 2: Body metrics -->
+        <!-- STEP 2 -->
         <div class="step-card" data-step="2">
           <div class="step-label">Step 02</div>
           <h2 class="step-title-main">Let’s get your basics.</h2>
@@ -618,7 +614,7 @@
           </div>
         </div>
 
-        <!-- STEP 3: Lifestyle -->
+        <!-- STEP 3 -->
         <div class="step-card" data-step="3">
           <div class="step-label">Step 03</div>
           <h2 class="step-title-main">What does a normal week feel like?</h2>
@@ -672,7 +668,7 @@
           </div>
         </div>
 
-        <!-- STEP 4: Goals -->
+        <!-- STEP 4 -->
         <div class="step-card" data-step="4">
           <div class="step-label">Step 04</div>
           <h2 class="step-title-main">What feels like the main goal?</h2>
@@ -715,7 +711,7 @@
           </div>
         </div>
 
-        <!-- STEP 5: Preferences -->
+        <!-- STEP 5 -->
         <div class="step-card" data-step="5">
           <div class="step-label">Step 05</div>
           <h2 class="step-title-main">Food & budget preferences.</h2>
@@ -769,7 +765,7 @@
           </div>
         </div>
 
-        <!-- STEP 6: Review & confirm -->
+        <!-- STEP 6 -->
         <div class="step-card" data-step="6">
           <div class="step-label">Step 06</div>
           <h2 class="step-title-main">Looks good so far?</h2>
@@ -794,199 +790,231 @@
             </div>
           </div>
         </div>
+
       </section>
     </div>
   </main>
-</body>
 
-<!-- PAGE LOGIC -->
-<script>
-  // Store answers here
-  const profile = {
-    persona: null,
-    age: null,
-    height: null,
-    weight: null,
-    sex: null,
-    activity: null,
-    sleep: null,
-    goal: null,
-    foodStyle: null,
-    budget: null
-  };
+  <script>
+    const profile = {
+      persona: null,
+      age: null,
+      height: null,
+      weight: null,
+      sex: null,
+      activity: null,
+      sleep: null,
+      goal: null,
+      foodStyle: null,
+      budget: null
+    };
 
-  let currentStep = 1;
-  const totalSteps = 6;
+    let currentStep = 1;
 
-  function showStep(step) {
-    currentStep = step;
-    // cards
-    document.querySelectorAll(".step-card").forEach(card => {
-      const s = Number(card.getAttribute("data-step"));
-      card.classList.toggle("active", s === step);
-    });
-    // progress bullets
-    document.querySelectorAll(".step-item").forEach(item => {
-      const label = Number(item.getAttribute("data-step-label"));
-      item.classList.remove("active", "completed");
-      if (label < step) {
-        item.classList.add("completed");
-      } else if (label === step) {
-        item.classList.add("active");
+    function showStep(step) {
+      currentStep = step;
+
+      document.querySelectorAll(".step-card").forEach(card => {
+        const s = Number(card.getAttribute("data-step"));
+        card.classList.toggle("active", s === step);
+      });
+
+      document.querySelectorAll(".step-item").forEach(item => {
+        const label = Number(item.getAttribute("data-step-label"));
+        item.classList.remove("active", "completed");
+        if (label < step) item.classList.add("completed");
+        else if (label === step) item.classList.add("active");
+      });
+    }
+
+    function setupPillGroup(containerId, key, nextBtnId) {
+      const container = document.getElementById(containerId);
+      const options = container ? container.querySelectorAll(".pill-option") : [];
+      const nextBtn = nextBtnId ? document.getElementById(nextBtnId) : null;
+
+      options.forEach(btn => {
+        btn.addEventListener("click", () => {
+          options.forEach(b => b.classList.remove("selected"));
+          btn.classList.add("selected");
+          profile[key] = btn.getAttribute("data-value");
+          if (nextBtn) nextBtn.disabled = false;
+        });
+      });
+    }
+
+    // STEP 1
+    setupPillGroup("persona-options", "persona", "next-1");
+    document.getElementById("next-1").addEventListener("click", () => showStep(2));
+
+    // STEP 2
+    setupPillGroup("sex-options", "sex", "next-2");
+
+    const ageInput = document.getElementById("age-input");
+    const heightInput = document.getElementById("height-input");
+    const weightInput = document.getElementById("weight-input");
+    const next2 = document.getElementById("next-2");
+
+    function checkStep2Valid() {
+      const ageVal = Number(ageInput.value);
+      const hVal = Number(heightInput.value);
+      const wVal = Number(weightInput.value);
+      const sexChosen = profile.sex !== null;
+
+      const ok =
+        ageVal >= 10 &&
+        ageVal <= 90 &&
+        hVal >= 120 &&
+        hVal <= 230 &&
+        wVal >= 30 &&
+        wVal <= 200 &&
+        sexChosen;
+
+      if (ok) {
+        profile.age = ageVal;
+        profile.height = hVal;
+        profile.weight = wVal;
       }
+      next2.disabled = !ok;
+    }
+
+    [ageInput, heightInput, weightInput].forEach(input => {
+      input.addEventListener("input", checkStep2Valid);
     });
-  }
 
-  // Helper: pill selection
-  function setupPillGroup(containerId, key, nextBtnId) {
-    const container = document.getElementById(containerId);
-    const options = container ? container.querySelectorAll(".pill-option") : [];
-    const nextBtn = nextBtnId ? document.getElementById(nextBtnId) : null;
+    next2.addEventListener("click", () => showStep(3));
 
-    options.forEach(btn => {
+    // STEP 3
+    setupPillGroup("activity-options", "activity", null);
+    setupPillGroup("sleep-options", "sleep", null);
+    const next3 = document.getElementById("next-3");
+
+    function checkStep3Valid() {
+      const ok = profile.activity !== null && profile.sleep !== null;
+      next3.disabled = !ok;
+    }
+
+    document.getElementById("activity-options").addEventListener("click", checkStep3Valid);
+    document.getElementById("sleep-options").addEventListener("click", checkStep3Valid);
+
+    next3.addEventListener("click", () => showStep(4));
+
+    // STEP 4
+    setupPillGroup("goal-options", "goal", "next-4");
+    document.getElementById("next-4").addEventListener("click", () => showStep(5));
+
+    // STEP 5
+    setupPillGroup("food-style-options", "foodStyle", null);
+    setupPillGroup("budget-options", "budget", null);
+    const next5 = document.getElementById("next-5");
+
+    function checkStep5Valid() {
+      const ok = profile.foodStyle !== null && profile.budget !== null;
+      next5.disabled = !ok;
+    }
+
+    document.getElementById("food-style-options").addEventListener("click", checkStep5Valid);
+    document.getElementById("budget-options").addEventListener("click", checkStep5Valid);
+
+    next5.addEventListener("click", () => {
+      const summary = document.getElementById("summary-list");
+
+      const personaMap = {
+        teen_athlete: "Teen / student athlete",
+        busy_parent: "Busy parent",
+        working_pro: "Working professional",
+        college_student: "College / uni student",
+        other: "Custom journey"
+      };
+
+      const sexMap = {
+        male: "Male",
+        female: "Female",
+        other: "Prefer not to say / other"
+      };
+
+      const activityMap = {
+        sedentary: "Mostly sitting",
+        light: "Lightly active",
+        active: "Active",
+        very_active: "Very active"
+      };
+
+      const sleepMap = {
+        under6: "Under 6 hours",
+        6to8: "Around 6–8 hours",
+        over8: "8+ hours"
+      };
+
+      const goalMap = {
+        weight_loss: "Lose body fat",
+        muscle_gain: "Build muscle",
+        recomp: "Get toned / recomposition",
+        performance: "Performance for sport",
+        health: "General health & consistency"
+      };
+
+      const foodMap = {
+        simple: "Simple meals",
+        cultural: "Cultural / family foods",
+        high_protein: "High-protein focus",
+        plant: "Mostly plant-based"
+      };
+
+      const budgetMap = {
+        tight: "Tight budget",
+        moderate: "Moderate budget",
+        flexible: "Flexible budget"
+      };
+
+      summary.innerHTML = `
+        <li><strong>Persona:</strong> ${personaMap[profile.persona] || "Not set"}</li>
+        <li><strong>Basics:</strong> ${profile.age || "?"} yrs · ${profile.height || "?"} cm · ${profile.weight || "?"} kg</li>
+        <li><strong>Sex:</strong> ${sexMap[profile.sex] || "Not set"}</li>
+        <li><strong>Activity level:</strong> ${activityMap[profile.activity] || "Not set"}</li>
+        <li><strong>Sleep:</strong> ${sleepMap[profile.sleep] || "Not set"}</li>
+        <li><strong>Main goal:</strong> ${goalMap[profile.goal] || "Not set"}</li>
+        <li><strong>Food style:</strong> ${foodMap[profile.foodStyle] || "Not set"}</li>
+        <li><strong>Budget:</strong> ${budgetMap[profile.budget] || "Not set"}</li>
+      `;
+      showStep(6);
+    });
+
+    // BACK buttons
+    document.querySelectorAll("[data-back]").forEach(btn => {
       btn.addEventListener("click", () => {
-        options.forEach(b => b.classList.remove("selected"));
-        btn.classList.add("selected");
-        profile[key] = btn.getAttribute("data-value");
-        if (nextBtn) {
-          nextBtn.disabled = false;
-        }
+        const target = Number(btn.getAttribute("data-back"));
+        showStep(target);
       });
     });
-  }
 
-  // STEP 1: persona
-  setupPillGroup("persona-options", "persona", "next-1");
-  document.getElementById("next-1").addEventListener("click", () => {
-    showStep(2);
-  });
-
-  // STEP 2: body metrics & sex
-  setupPillGroup("sex-options", "sex", "next-2");
-
-  const ageInput = document.getElementById("age-input");
-  const heightInput = document.getElementById("height-input");
-  const weightInput = document.getElementById("weight-input");
-  const next2 = document.getElementById("next-2");
-
-  function checkStep2Valid() {
-    const ageVal = Number(ageInput.value);
-    const hVal = Number(heightInput.value);
-    const wVal = Number(weightInput.value);
-    const sexChosen = profile.sex !== null;
-
-    const ok =
-      ageVal >= 10 &&
-      ageVal <= 90 &&
-      hVal >= 120 &&
-      hVal <= 230 &&
-      wVal >= 30 &&
-      wVal <= 200 &&
-      sexChosen;
-
-    if (ok) {
-      profile.age = ageVal;
-      profile.height = hVal;
-      profile.weight = wVal;
-    }
-    next2.disabled = !ok;
-  }
-
-  [ageInput, heightInput, weightInput].forEach(input => {
-    input.addEventListener("input", checkStep2Valid);
-  });
-
-  next2.addEventListener("click", () => {
-    showStep(3);
-  });
-
-  // STEP 3: lifestyle
-  setupPillGroup("activity-options", "activity", null);
-  setupPillGroup("sleep-options", "sleep", null);
-  const next3 = document.getElementById("next-3");
-
-  function checkStep3Valid() {
-    const ok = profile.activity !== null && profile.sleep !== null;
-    next3.disabled = !ok;
-  }
-
-  document.getElementById("activity-options").addEventListener("click", checkStep3Valid);
-  document.getElementById("sleep-options").addEventListener("click", checkStep3Valid);
-
-  next3.addEventListener("click", () => {
-    showStep(4);
-  });
-
-  // STEP 4: goal
-  setupPillGroup("goal-options", "goal", "next-4");
-  document.getElementById("next-4").addEventListener("click", () => {
-    showStep(5);
-  });
-
-  // STEP 5: preferences
-  setupPillGroup("food-style-options", "foodStyle", null);
-  setupPillGroup("budget-options", "budget", null);
-  const next5 = document.getElementById("next-5");
-
-  function checkStep5Valid() {
-    const ok = profile.foodStyle !== null && profile.budget !== null;
-    next5.disabled = !ok;
-  }
-
-  document.getElementById("food-style-options").addEventListener("click", checkStep5Valid);
-  document.getElementById("budget-options").addEventListener("click", checkStep5Valid);
-
-  next5.addEventListener("click", () => {
-    // build summary
-    const summary = document.getElementById("summary-list");
-    summary.innerHTML = `
-      <li><strong>Persona:</strong> ${profile.persona || "Not set"}</li>
-      <li><strong>Age / height / weight:</strong> ${profile.age || "?"} y · ${profile.height || "?"} cm · ${profile.weight || "?"} kg</li>
-      <li><strong>Sex:</strong> ${profile.sex || "Not set"}</li>
-      <li><strong>Activity level:</strong> ${profile.activity || "Not set"}</li>
-      <li><strong>Sleep:</strong> ${profile.sleep || "Not set"}</li>
-      <li><strong>Main goal:</strong> ${profile.goal || "Not set"}</li>
-      <li><strong>Food style:</strong> ${profile.foodStyle || "Not set"}</li>
-      <li><strong>Budget:</strong> ${profile.budget || "Not set"}</li>
-    `;
-    showStep(6);
-  });
-
-  // BACK buttons
-  document.querySelectorAll("[data-back]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const target = Number(btn.getAttribute("data-back"));
-      showStep(target);
+    // Finish: save + go to plan.html
+    document.getElementById("finish-btn").addEventListener("click", () => {
+      try {
+        localStorage.setItem("nutrimindProfile", JSON.stringify(profile));
+      } catch (e) {
+        console.warn("Could not save profile to localStorage", e);
+      }
+      window.location.href = "plan.html";
     });
-  });
 
-  // Finish – for now just store profile and alert
-  document.getElementById("finish-btn").addEventListener("click", () => {
-    try {
-      localStorage.setItem("nutrimindProfile", JSON.stringify(profile));
-    } catch (e) {
-      console.warn("Could not save profile to localStorage", e);
-    }
-    alert("🔥 Profile captured. Next step: we’ll hook this into the AI engine to generate your full plan.");
-  });
-
-  // Optional: read selected path from previous page if we ever set it
-  (function loadSelectedPath() {
-    try {
-      const stored = localStorage.getItem("selectedPath");
-      if (!stored) return;
-      const map = {
-        "weight-loss": "Path: Lose weight",
-        "muscle-gain": "Path: Build muscle",
-        "athlete-mode": "Path: Athlete mode",
-        "busy-parent": "Path: Busy parent",
-      };
-      const text = map[stored] || "Custom journey";
-      const pill = document.getElementById("selected-path-pill");
-      const label = document.getElementById("selected-path-text");
-      label.textContent = text;
-      pill.style.display = "inline-flex";
-    } catch (e) {}
-  })();
-</script>
+    // Optional: show selected path, if we ever set it from index
+    (function loadSelectedPath() {
+      try {
+        const stored = localStorage.getItem("selectedPath");
+        if (!stored) return;
+        const map = {
+          "weight-loss": "Path: Lose weight",
+          "muscle-gain": "Path: Build muscle",
+          "athlete-mode": "Path: Athlete mode",
+          "busy-parent": "Path: Busy parent",
+        };
+        const text = map[stored] || "Custom journey";
+        const pill = document.getElementById("selected-path-pill");
+        const label = document.getElementById("selected-path-text");
+        label.textContent = text;
+        pill.style.display = "inline-flex";
+      } catch(e) {}
+    })();
+  </script>
+</body>
 </html>
