@@ -1,1 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>NutriMind AI · Unlock Full Coaching</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      background: radial-gradient(circle at top left, #f9f7f2 0, #f3f2ed 38%, #eceae4 100%);
+      color: #111;
+    }
+
+    .nav {
+      padding: 18px 0;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(12px);
+      background: rgba(244,243,239,0.9);
+    }
+
+    .nav-inner {
+      max-width: 960px;
+      margin: auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #111, #222);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #f9f7f2;
+      font-weight: bold;
+      font-size: 0.8rem;
+    }
+
+    .nav-logo-text {
+      margin-left: 8px;
+      letter-spacing: 0.16em;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+    }
+
+    .header {
+      text-align: center;
+      padding: 40px 20px 10px;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+
+    .sub {
+      font-size: 1rem;
+      opacity: 0.75;
+      max-width: 560px;
+      margin: 0 auto 30px;
+    }
+
+    .plans {
+      max-width: 900px;
+      margin: auto;
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      padding: 20px;
+    }
+
+    .plan-card {
+      background: white;
+      padding: 22px;
+      border-radius: 18px;
+      border: 1px solid rgba(0,0,0,0.06);
+      box-shadow: 0 14px 40px rgba(0,0,0,0.07);
+      text-align: center;
+    }
+
+    .plan-card h2 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+
+    .price {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .price span {
+      font-size: 0.9rem;
+      opacity: 0.6;
+    }
+
+    .features {
+      list-style: none;
+      padding: 0;
+      margin: 18px 0;
+      font-size: 0.9rem;
+      opacity: 0.85;
+      line-height: 1.5;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: #111;
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .footer {
+      margin-top: 30px;
+      text-align: center;
+      opacity: 0.6;
+      font-size: 0.8rem;
+      padding-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="nav-inner">
+      <div style="display:flex; align-items:center;">
+        <div class="nav-logo-mark">N</div>
+        <div class="nav-logo-text">NutriMind AI</div>
+      </div>
+
+      <a href="plan.html" style="font-size:0.85rem; opacity:0.7; text-decoration:underline;">← Back to my plan</a>
+    </div>
+  </header>
+
+  <!-- HEADER -->
+  <section class="header">
+    <h1>Unlock Full AI Coaching</h1>
+    <p class="sub">
+      Get unlimited access to your personalized nutrition AI coach, weekly adaptive plans, smart meal generator, training optimization, and recovery system.
+    </p>
+  </section>
+
+  <!-- PLANS -->
+  <section class="plans">
+
+    <!-- WEEKLY -->
+    <div class="plan-card">
+      <h2>Weekly Access</h2>
+      <div class="price">$7.99 <span>/ week</span></div>
+      <ul class="features">
+        <li>Full AI coach</li>
+        <li>Weekly adaptive nutrition plan</li>
+        <li>Training + recovery guidance</li>
+        <li>Cancel anytime</li>
+      </ul>
+
+      <a class="btn" href="https://buy.stripe.com/28E00jdeVglIgxh15K6EU02">Choose Weekly</a>
+    </div>
+
+    <!-- MONTHLY -->
+    <div class="plan-card">
+      <h2>Monthly Access</h2>
+      <div class="price">$19.99 <span>/ month</span></div>
+      <ul class="features">
+        <li>Everything in Weekly</li>
+        <li>Cheaper price per week</li>
+        <li>Stronger progress tracking</li>
+        <li>Cancel anytime</li>
+      </ul>
+
+      <a class="btn" href="https://buy.stripe.com/5kQaEXb6N7PcbcX7u86EU01">Choose Monthly</a>
+    </div>
+
+    <!-- YEARLY -->
+    <div class="plan-card" style="border:2px solid #111;">
+      <h2>Yearly Access</h2>
+      <div class="price">$69.99 <span>/ year</span></div>
+      <ul class="features">
+        <li>Best value</li>
+        <li>AI meal & training generator</li>
+        <li>Full habit + progress system</li>
+        <li>All premium updates included</li>
+      </ul>
+
+      <a class="btn" href="https://buy.stripe.com/7sY14ncaRd9wa8T01G6EU00">Choose Yearly</a>
+    </div>
+
+  </section>
+
+  <p class="footer">© 2025 NutriMind AI · Premium Coaching System</p>
+
+</body>
+</html>
